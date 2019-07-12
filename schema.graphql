@@ -1,0 +1,27 @@
+type Query {
+    dialogs: [Dialog!]!
+}
+
+type Mutation {
+    createDialog(name: String!, roles: [Role!]!, lines: [Line!]!): Dialog!
+}
+
+type Dialog {
+    id: ID!
+    name: String!
+    roles: [Role!]!
+    lines: [Line!]!
+}
+
+type Role {
+    id: ID!
+    name: String!
+}
+
+type Line {
+    id: ID!
+    text: String!
+    guess: String!
+    role: Role!
+    number: Int!
+}

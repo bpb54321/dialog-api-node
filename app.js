@@ -1,62 +1,40 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const graphqlHttp = require('express-graphql');
-const {buildSchema} = require('graphql');
+const { GraphQLServer } = require('graphql-yoga');
 
-const app = express();
+const typeDefs = `
+  type Query {
+    info: String!
+  }
 
-const events = [];
+  type Dialog {
+    _id: ID!
+    name: String!
+    roles: [Role]!
+    lines: [Line]!
+  }
 
-app.use(bodyParser.json());
+  type Role {
+    _id: ID!
+    name: String!
+  }
 
-app.use('/graphql', graphqlHttp({
-  schema: buildSchema(`
+  type Line {
+    _id: ID!
+    text: String!
+    guess: String!
+    role: Role!
+    number: Int!
+  }
+`;
 
-    type Event {
-      _id: ID!
-      title: String!
-      price: Float!
-      date: String!
-      description: String!
-    }
+const resolvers = {
+  Query: {
+    info: () => `This is the API of a Hackernews Clone`
+  }
+};
 
-    input EventInput {
-      title: String!
-      description: String!
-      price: Float!
-      date: String!
-    }
+const server = new GraphQLServer({
+  typeDefs,
+  resolvers,
+});
 
-    type RootQuery {
-      events: [Event!]!
-    }
-
-    type RootMutation {
-      createEvent(eventInput: EventInput): Event
-    }
-
-    schema {
-      query: RootQuery
-      mutation: RootMutation
-    }
-  `),
-  rootValue: {
-    events: () => {
-      return events;
-    },
-    createEvent: (args) => {
-      const event = {
-        _id: Math.random().toString(),
-        title: args.eventInput.title,
-        description: args.eventInput.description,
-        price: parseFloat(args.eventInput.price),
-        date: args.eventInput.date,
-      };
-      events.push(event);
-      return event;
-    }
-  },
-  graphiql: true,
-}));
-
-app.listen(3000);
+server.start(() => console.log(`Server is running on http://localhost:4000`));

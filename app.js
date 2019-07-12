@@ -1,24 +1,25 @@
 const { GraphQLServer } = require('graphql-yoga');
+let { testDialogs } = require('./data');
 
 const typeDefs = `
   type Query {
-    info: String!
+    dialogs: [Dialog!]!
   }
 
   type Dialog {
-    _id: ID!
+    id: ID!
     name: String!
-    roles: [Role]!
-    lines: [Line]!
+    roles: [Role!]!
+    lines: [Line!]!
   }
 
   type Role {
-    _id: ID!
+    id: ID!
     name: String!
   }
 
   type Line {
-    _id: ID!
+    id: ID!
     text: String!
     guess: String!
     role: Role!
@@ -28,7 +29,13 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    info: () => `This is the API of a Hackernews Clone`
+    dialogs: () => testDialogs,
+  },
+  Dialog: {
+    id: (parent) => parent.id,
+    name: (parent) => parent.name,
+    roles: (parent) => parent.roles,
+    lines: (parent) => parent.lines,
   }
 };
 

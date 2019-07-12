@@ -6,10 +6,21 @@ const resolvers = {
   Query: {
     dialogs: () => testDialogs,
   },
+  Mutation: {
+    createDialog: (parent, args) => {
+        let dialog = {
+          name: args.name,
+          roles: args.roles,
+          lines: args.lines,
+        };
+        testDialogs.push(dialog);
+        return dialog;
+    }
+  }
 };
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers,
 });
 

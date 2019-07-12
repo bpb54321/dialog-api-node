@@ -3,7 +3,7 @@ type Query {
 }
 
 type Mutation {
-    createDialog(name: String!, roles: [Role!]!, lines: [Line!]!): Dialog!
+    createDialog(name: String!, roles: [RoleInput!]!, lines: [LineInput!]!): Dialog!
 }
 
 type Dialog {
@@ -18,10 +18,20 @@ type Role {
     name: String!
 }
 
+input RoleInput {
+    name: String!
+}
+
 type Line {
-    id: ID!
     text: String!
     guess: String!
     role: Role!
+    number: Int!
+}
+
+input LineInput {
+    text: String!
+    guess: String!
+    role: RoleInput!
     number: Int!
 }

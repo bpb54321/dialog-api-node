@@ -23,6 +23,7 @@ input RoleInput {
 }
 
 type Line {
+    id: ID!
     text: String!
     guess: String!
     role: Role!

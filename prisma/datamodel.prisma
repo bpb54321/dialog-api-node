@@ -1,0 +1,27 @@
+type Dialog {
+    id: ID! @id
+    name: String!
+    roles: [Role!]!
+    lines: [Line!]!
+}
+
+type Role {
+    id: ID! @id
+    name: String!
+}
+
+type Line {
+    id: ID! @id
+    text: String!
+    guess: String!
+    role: Role!
+    number: Int!
+}
+
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  dialogs: [Dialog!]!
+}

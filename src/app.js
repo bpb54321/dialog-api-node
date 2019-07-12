@@ -1,20 +1,21 @@
+const { prisma } = require('./generated/prisma-client');
 const { GraphQLServer } = require('graphql-yoga');
-let { testDialogs } = require('./data');
 
 
 const resolvers = {
   Query: {
-    dialogs: () => testDialogs,
+    dialogs: (root, args, context, info) => {
+      return context.prisma.dialogs();
+    },
   },
   Mutation: {
-    createDialog: (parent, args) => {
+    createDialog: (root, args, context) => {
         let dialog = {
           name: args.name,
           roles: args.roles,
           lines: args.lines,
         };
-        testDialogs.push(dialog);
-        return dialog;
+        return context.prisma.createDialog(dialog);
     }
   }
 };
@@ -22,6 +23,7 @@ const resolvers = {
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
+  context: { prisma },
 });
 
 server.start(() => console.log(`Server is running on http://localhost:4000`));

@@ -4,6 +4,8 @@ type Query {
 
 type Mutation {
     createDialog(name: String!, roles: [RoleInput!]!, lines: [LineInput!]!): Dialog!
+    signup(email: String!, password: String!, name: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
 }
 
 type Dialog {
@@ -35,4 +37,16 @@ input LineInput {
     guess: String!
     role: RoleInput!
     number: Int!
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  dialogs: [Dialog!]!
 }

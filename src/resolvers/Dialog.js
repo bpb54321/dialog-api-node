@@ -1,4 +1,4 @@
-function lines (parent) {
+function lines (parent, args, context) {
   return context.prisma.dialog({id: parent.id}).lines();
 }
 

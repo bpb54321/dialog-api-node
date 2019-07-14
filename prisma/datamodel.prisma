@@ -1,7 +1,6 @@
 type Dialog {
     id: ID! @id
     name: String!
-    roles: [Role!]!
     lines: [Line!]!
 }
 
@@ -14,7 +13,7 @@ type Line {
     id: ID! @id
     text: String!
     guess: String!
-    role: Role!
+    role: Role! @relation(link: INLINE)
     number: Int!
 }
 

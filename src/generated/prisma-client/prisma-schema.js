@@ -26,7 +26,6 @@ type BatchPayload {
 type Dialog {
   id: ID!
   name: String!
-  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   lines(where: LineWhereInput, orderBy: LineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Line!]
 }
 
@@ -39,7 +38,6 @@ type DialogConnection {
 input DialogCreateInput {
   id: ID
   name: String!
-  roles: RoleCreateManyInput
   lines: LineCreateManyInput
 }
 
@@ -119,13 +117,11 @@ input DialogSubscriptionWhereInput {
 
 input DialogUpdateDataInput {
   name: String
-  roles: RoleUpdateManyInput
   lines: LineUpdateManyInput
 }
 
 input DialogUpdateInput {
   name: String
-  roles: RoleUpdateManyInput
   lines: LineUpdateManyInput
 }
 
@@ -194,9 +190,6 @@ input DialogWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  roles_every: RoleWhereInput
-  roles_some: RoleWhereInput
-  roles_none: RoleWhereInput
   lines_every: LineWhereInput
   lines_some: LineWhereInput
   lines_none: LineWhereInput
@@ -526,11 +519,6 @@ input RoleCreateInput {
   name: String!
 }
 
-input RoleCreateManyInput {
-  create: [RoleCreateInput!]
-  connect: [RoleWhereUniqueInput!]
-}
-
 input RoleCreateOneInput {
   create: RoleCreateInput
   connect: RoleWhereUniqueInput
@@ -551,40 +539,6 @@ enum RoleOrderByInput {
 type RolePreviousValues {
   id: ID!
   name: String!
-}
-
-input RoleScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  AND: [RoleScalarWhereInput!]
-  OR: [RoleScalarWhereInput!]
-  NOT: [RoleScalarWhereInput!]
 }
 
 type RoleSubscriptionPayload {
@@ -613,29 +567,8 @@ input RoleUpdateInput {
   name: String
 }
 
-input RoleUpdateManyDataInput {
-  name: String
-}
-
-input RoleUpdateManyInput {
-  create: [RoleCreateInput!]
-  update: [RoleUpdateWithWhereUniqueNestedInput!]
-  upsert: [RoleUpsertWithWhereUniqueNestedInput!]
-  delete: [RoleWhereUniqueInput!]
-  connect: [RoleWhereUniqueInput!]
-  set: [RoleWhereUniqueInput!]
-  disconnect: [RoleWhereUniqueInput!]
-  deleteMany: [RoleScalarWhereInput!]
-  updateMany: [RoleUpdateManyWithWhereNestedInput!]
-}
-
 input RoleUpdateManyMutationInput {
   name: String
-}
-
-input RoleUpdateManyWithWhereNestedInput {
-  where: RoleScalarWhereInput!
-  data: RoleUpdateManyDataInput!
 }
 
 input RoleUpdateOneRequiredInput {
@@ -645,18 +578,7 @@ input RoleUpdateOneRequiredInput {
   connect: RoleWhereUniqueInput
 }
 
-input RoleUpdateWithWhereUniqueNestedInput {
-  where: RoleWhereUniqueInput!
-  data: RoleUpdateDataInput!
-}
-
 input RoleUpsertNestedInput {
-  update: RoleUpdateDataInput!
-  create: RoleCreateInput!
-}
-
-input RoleUpsertWithWhereUniqueNestedInput {
-  where: RoleWhereUniqueInput!
   update: RoleUpdateDataInput!
   create: RoleCreateInput!
 }

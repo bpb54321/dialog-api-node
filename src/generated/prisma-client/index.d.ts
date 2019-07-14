@@ -228,13 +228,13 @@ export type LineOrderByInput =
   | "number_ASC"
   | "number_DESC";
 
-export type RoleOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
-
 export type DialogOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
   | "name_DESC";
+
+export type RoleOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -248,48 +248,56 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface RoleUpsertWithWhereUniqueNestedInput {
-  where: RoleWhereUniqueInput;
-  update: RoleUpdateDataInput;
-  create: RoleCreateInput;
+export interface LineUpdateManyInput {
+  create?: Maybe<LineCreateInput[] | LineCreateInput>;
+  update?: Maybe<
+    | LineUpdateWithWhereUniqueNestedInput[]
+    | LineUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | LineUpsertWithWhereUniqueNestedInput[]
+    | LineUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  connect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  set?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  disconnect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  deleteMany?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
+  updateMany?: Maybe<
+    LineUpdateManyWithWhereNestedInput[] | LineUpdateManyWithWhereNestedInput
+  >;
 }
 
 export type DialogWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export interface DialogCreateManyInput {
+  create?: Maybe<DialogCreateInput[] | DialogCreateInput>;
+  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+}
+
 export interface DialogUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
-export interface RoleUpdateManyDataInput {
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  dialogs?: Maybe<DialogCreateManyInput>;
+}
+
+export interface RoleUpdateDataInput {
   name?: Maybe<String>;
 }
 
-export interface DialogCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  roles?: Maybe<RoleCreateManyInput>;
-  lines?: Maybe<LineCreateManyInput>;
+export interface RoleUpdateManyMutationInput {
+  name?: Maybe<String>;
 }
 
-export interface RoleSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<RoleWhereInput>;
-  AND?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  OR?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-}
-
-export interface RoleCreateManyInput {
-  create?: Maybe<RoleCreateInput[] | RoleCreateInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-}
-
-export interface RoleWhereInput {
+export interface DialogWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -318,14 +326,27 @@ export interface RoleWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<RoleWhereInput[] | RoleWhereInput>;
-  OR?: Maybe<RoleWhereInput[] | RoleWhereInput>;
-  NOT?: Maybe<RoleWhereInput[] | RoleWhereInput>;
+  lines_every?: Maybe<LineWhereInput>;
+  lines_some?: Maybe<LineWhereInput>;
+  lines_none?: Maybe<LineWhereInput>;
+  AND?: Maybe<DialogWhereInput[] | DialogWhereInput>;
+  OR?: Maybe<DialogWhereInput[] | DialogWhereInput>;
+  NOT?: Maybe<DialogWhereInput[] | DialogWhereInput>;
 }
 
-export interface RoleCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
+export interface RoleUpdateInput {
+  name?: Maybe<String>;
+}
+
+export interface RoleSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<RoleWhereInput>;
+  AND?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
+  OR?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
+  NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
 }
 
 export interface DialogSubscriptionWhereInput {
@@ -339,13 +360,30 @@ export interface DialogSubscriptionWhereInput {
   NOT?: Maybe<DialogSubscriptionWhereInput[] | DialogSubscriptionWhereInput>;
 }
 
+export interface DialogUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface DialogCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  lines?: Maybe<LineCreateManyInput>;
+}
+
+export interface DialogUpdateManyWithWhereNestedInput {
+  where: DialogScalarWhereInput;
+  data: DialogUpdateManyDataInput;
+}
+
 export interface LineCreateManyInput {
   create?: Maybe<LineCreateInput[] | LineCreateInput>;
   connect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
 }
 
-export interface DialogUpdateManyDataInput {
-  name?: Maybe<String>;
+export interface DialogUpsertWithWhereUniqueNestedInput {
+  where: DialogWhereUniqueInput;
+  update: DialogUpdateDataInput;
+  create: DialogCreateInput;
 }
 
 export interface LineCreateInput {
@@ -356,75 +394,76 @@ export interface LineCreateInput {
   number: Int;
 }
 
-export type LineWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface LineWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  guess?: Maybe<String>;
+  guess_not?: Maybe<String>;
+  guess_in?: Maybe<String[] | String>;
+  guess_not_in?: Maybe<String[] | String>;
+  guess_lt?: Maybe<String>;
+  guess_lte?: Maybe<String>;
+  guess_gt?: Maybe<String>;
+  guess_gte?: Maybe<String>;
+  guess_contains?: Maybe<String>;
+  guess_not_contains?: Maybe<String>;
+  guess_starts_with?: Maybe<String>;
+  guess_not_starts_with?: Maybe<String>;
+  guess_ends_with?: Maybe<String>;
+  guess_not_ends_with?: Maybe<String>;
+  role?: Maybe<RoleWhereInput>;
+  number?: Maybe<Int>;
+  number_not?: Maybe<Int>;
+  number_in?: Maybe<Int[] | Int>;
+  number_not_in?: Maybe<Int[] | Int>;
+  number_lt?: Maybe<Int>;
+  number_lte?: Maybe<Int>;
+  number_gt?: Maybe<Int>;
+  number_gte?: Maybe<Int>;
+  AND?: Maybe<LineWhereInput[] | LineWhereInput>;
+  OR?: Maybe<LineWhereInput[] | LineWhereInput>;
+  NOT?: Maybe<LineWhereInput[] | LineWhereInput>;
+}
 
 export interface RoleCreateOneInput {
   create?: Maybe<RoleCreateInput>;
   connect?: Maybe<RoleWhereUniqueInput>;
 }
 
-export interface DialogUpsertWithWhereUniqueNestedInput {
+export interface DialogUpdateWithWhereUniqueNestedInput {
   where: DialogWhereUniqueInput;
-  update: DialogUpdateDataInput;
-  create: DialogCreateInput;
+  data: DialogUpdateDataInput;
 }
 
-export interface DialogUpdateInput {
-  name?: Maybe<String>;
-  roles?: Maybe<RoleUpdateManyInput>;
-  lines?: Maybe<LineUpdateManyInput>;
-}
-
-export type RoleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface RoleUpdateManyInput {
-  create?: Maybe<RoleCreateInput[] | RoleCreateInput>;
-  update?: Maybe<
-    | RoleUpdateWithWhereUniqueNestedInput[]
-    | RoleUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | RoleUpsertWithWhereUniqueNestedInput[]
-    | RoleUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  updateMany?: Maybe<
-    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface DialogUpdateManyInput {
-  create?: Maybe<DialogCreateInput[] | DialogCreateInput>;
-  update?: Maybe<
-    | DialogUpdateWithWhereUniqueNestedInput[]
-    | DialogUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | DialogUpsertWithWhereUniqueNestedInput[]
-    | DialogUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  set?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  disconnect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  deleteMany?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
-  updateMany?: Maybe<
-    | DialogUpdateManyWithWhereNestedInput[]
-    | DialogUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface RoleUpdateWithWhereUniqueNestedInput {
-  where: RoleWhereUniqueInput;
-  data: RoleUpdateDataInput;
+export interface RoleCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -432,8 +471,9 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface RoleUpdateDataInput {
+export interface DialogUpdateInput {
   name?: Maybe<String>;
+  lines?: Maybe<LineUpdateManyInput>;
 }
 
 export interface UserWhereInput {
@@ -501,63 +541,13 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface LineUpdateInput {
-  text?: Maybe<String>;
-  guess?: Maybe<String>;
-  role?: Maybe<RoleUpdateOneRequiredInput>;
-  number?: Maybe<Int>;
-}
-
-export interface RoleUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface RoleScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  OR?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  NOT?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-}
-
 export interface LineUpdateManyMutationInput {
   text?: Maybe<String>;
   guess?: Maybe<String>;
   number?: Maybe<Int>;
 }
 
-export interface RoleUpdateManyWithWhereNestedInput {
-  where: RoleScalarWhereInput;
-  data: RoleUpdateManyDataInput;
-}
-
-export interface DialogWhereInput {
+export interface RoleWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -586,72 +576,14 @@ export interface DialogWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  roles_every?: Maybe<RoleWhereInput>;
-  roles_some?: Maybe<RoleWhereInput>;
-  roles_none?: Maybe<RoleWhereInput>;
-  lines_every?: Maybe<LineWhereInput>;
-  lines_some?: Maybe<LineWhereInput>;
-  lines_none?: Maybe<LineWhereInput>;
-  AND?: Maybe<DialogWhereInput[] | DialogWhereInput>;
-  OR?: Maybe<DialogWhereInput[] | DialogWhereInput>;
-  NOT?: Maybe<DialogWhereInput[] | DialogWhereInput>;
+  AND?: Maybe<RoleWhereInput[] | RoleWhereInput>;
+  OR?: Maybe<RoleWhereInput[] | RoleWhereInput>;
+  NOT?: Maybe<RoleWhereInput[] | RoleWhereInput>;
 }
 
-export interface LineWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  guess?: Maybe<String>;
-  guess_not?: Maybe<String>;
-  guess_in?: Maybe<String[] | String>;
-  guess_not_in?: Maybe<String[] | String>;
-  guess_lt?: Maybe<String>;
-  guess_lte?: Maybe<String>;
-  guess_gt?: Maybe<String>;
-  guess_gte?: Maybe<String>;
-  guess_contains?: Maybe<String>;
-  guess_not_contains?: Maybe<String>;
-  guess_starts_with?: Maybe<String>;
-  guess_not_starts_with?: Maybe<String>;
-  guess_ends_with?: Maybe<String>;
-  guess_not_ends_with?: Maybe<String>;
-  role?: Maybe<RoleWhereInput>;
-  number?: Maybe<Int>;
-  number_not?: Maybe<Int>;
-  number_in?: Maybe<Int[] | Int>;
-  number_not_in?: Maybe<Int[] | Int>;
-  number_lt?: Maybe<Int>;
-  number_lte?: Maybe<Int>;
-  number_gt?: Maybe<Int>;
-  number_gte?: Maybe<Int>;
-  AND?: Maybe<LineWhereInput[] | LineWhereInput>;
-  OR?: Maybe<LineWhereInput[] | LineWhereInput>;
-  NOT?: Maybe<LineWhereInput[] | LineWhereInput>;
+export interface LineUpdateWithWhereUniqueNestedInput {
+  where: LineWhereUniqueInput;
+  data: LineUpdateDataInput;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -660,24 +592,11 @@ export interface UserUpdateManyMutationInput {
   password?: Maybe<String>;
 }
 
-export interface LineUpdateManyInput {
-  create?: Maybe<LineCreateInput[] | LineCreateInput>;
-  update?: Maybe<
-    | LineUpdateWithWhereUniqueNestedInput[]
-    | LineUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | LineUpsertWithWhereUniqueNestedInput[]
-    | LineUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  connect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  set?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  disconnect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  deleteMany?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
-  updateMany?: Maybe<
-    LineUpdateManyWithWhereNestedInput[] | LineUpdateManyWithWhereNestedInput
-  >;
+export interface LineUpdateDataInput {
+  text?: Maybe<String>;
+  guess?: Maybe<String>;
+  role?: Maybe<RoleUpdateOneRequiredInput>;
+  number?: Maybe<Int>;
 }
 
 export interface DialogScalarWhereInput {
@@ -714,28 +633,6 @@ export interface DialogScalarWhereInput {
   NOT?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
 }
 
-export interface LineUpdateWithWhereUniqueNestedInput {
-  where: LineWhereUniqueInput;
-  data: LineUpdateDataInput;
-}
-
-export interface DialogUpdateWithWhereUniqueNestedInput {
-  where: DialogWhereUniqueInput;
-  data: DialogUpdateDataInput;
-}
-
-export interface LineUpdateDataInput {
-  text?: Maybe<String>;
-  guess?: Maybe<String>;
-  role?: Maybe<RoleUpdateOneRequiredInput>;
-  number?: Maybe<Int>;
-}
-
-export interface DialogCreateManyInput {
-  create?: Maybe<DialogCreateInput[] | DialogCreateInput>;
-  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-}
-
 export interface RoleUpdateOneRequiredInput {
   create?: Maybe<RoleCreateInput>;
   update?: Maybe<RoleUpdateDataInput>;
@@ -743,8 +640,23 @@ export interface RoleUpdateOneRequiredInput {
   connect?: Maybe<RoleWhereUniqueInput>;
 }
 
-export interface RoleUpdateInput {
+export interface DialogUpdateDataInput {
   name?: Maybe<String>;
+  lines?: Maybe<LineUpdateManyInput>;
+}
+
+export interface LineUpdateInput {
+  text?: Maybe<String>;
+  guess?: Maybe<String>;
+  role?: Maybe<RoleUpdateOneRequiredInput>;
+  number?: Maybe<Int>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  dialogs?: Maybe<DialogUpdateManyInput>;
 }
 
 export interface RoleUpsertNestedInput {
@@ -836,10 +748,9 @@ export interface LineUpsertWithWhereUniqueNestedInput {
   create: LineCreateInput;
 }
 
-export interface DialogUpdateManyWithWhereNestedInput {
-  where: DialogScalarWhereInput;
-  data: DialogUpdateManyDataInput;
-}
+export type LineWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
@@ -852,26 +763,30 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  dialogs?: Maybe<DialogCreateManyInput>;
+export interface DialogUpdateManyInput {
+  create?: Maybe<DialogCreateInput[] | DialogCreateInput>;
+  update?: Maybe<
+    | DialogUpdateWithWhereUniqueNestedInput[]
+    | DialogUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | DialogUpsertWithWhereUniqueNestedInput[]
+    | DialogUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  set?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  disconnect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  deleteMany?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
+  updateMany?: Maybe<
+    | DialogUpdateManyWithWhereNestedInput[]
+    | DialogUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface UserUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  dialogs?: Maybe<DialogUpdateManyInput>;
-}
-
-export interface DialogUpdateDataInput {
-  name?: Maybe<String>;
-  roles?: Maybe<RoleUpdateManyInput>;
-  lines?: Maybe<LineUpdateManyInput>;
-}
+export type RoleWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface NodeNode {
   id: ID_Output;
@@ -902,6 +817,38 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
+export interface AggregateDialog {
+  count: Int;
+}
+
+export interface AggregateDialogPromise
+  extends Promise<AggregateDialog>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDialogSubscription
+  extends Promise<AsyncIterator<AggregateDialog>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
 export interface DialogEdge {
   node: Dialog;
   cursor: String;
@@ -917,6 +864,41 @@ export interface DialogEdgeSubscription
     Fragmentable {
   node: <T = DialogSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Line {
+  id: ID_Output;
+  text: String;
+  guess: String;
+  number: Int;
+}
+
+export interface LinePromise extends Promise<Line>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  guess: () => Promise<String>;
+  role: <T = RolePromise>() => T;
+  number: () => Promise<Int>;
+}
+
+export interface LineSubscription
+  extends Promise<AsyncIterator<Line>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  guess: () => Promise<AsyncIterator<String>>;
+  role: <T = RoleSubscription>() => T;
+  number: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface LineNullablePromise
+  extends Promise<Line | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  guess: () => Promise<String>;
+  role: <T = RolePromise>() => T;
+  number: () => Promise<Int>;
 }
 
 export interface Role {
@@ -941,22 +923,6 @@ export interface RoleNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-}
-
-export interface AggregateDialog {
-  count: Int;
-}
-
-export interface AggregateDialogPromise
-  extends Promise<AggregateDialog>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDialogSubscription
-  extends Promise<AsyncIterator<AggregateDialog>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface RoleSubscriptionPayload {
@@ -1003,22 +969,6 @@ export interface RolePreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
 export interface AggregateUser {
   count: Int;
 }
@@ -1033,6 +983,197 @@ export interface AggregateUserSubscription
   extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface Dialog {
+  id: ID_Output;
+  name: String;
+}
+
+export interface DialogPromise extends Promise<Dialog>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  lines: <T = FragmentableArray<Line>>(args?: {
+    where?: LineWhereInput;
+    orderBy?: LineOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface DialogSubscription
+  extends Promise<AsyncIterator<Dialog>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  lines: <T = Promise<AsyncIterator<LineSubscription>>>(args?: {
+    where?: LineWhereInput;
+    orderBy?: LineOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface DialogNullablePromise
+  extends Promise<Dialog | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  lines: <T = FragmentableArray<Line>>(args?: {
+    where?: LineWhereInput;
+    orderBy?: LineOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface AggregateRole {
+  count: Int;
+}
+
+export interface AggregateRolePromise
+  extends Promise<AggregateRole>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRoleSubscription
+  extends Promise<AsyncIterator<AggregateRole>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface DialogSubscriptionPayload {
+  mutation: MutationType;
+  node: Dialog;
+  updatedFields: String[];
+  previousValues: DialogPreviousValues;
+}
+
+export interface DialogSubscriptionPayloadPromise
+  extends Promise<DialogSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = DialogPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = DialogPreviousValuesPromise>() => T;
+}
+
+export interface DialogSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<DialogSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = DialogSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = DialogPreviousValuesSubscription>() => T;
+}
+
+export interface RoleConnection {
+  pageInfo: PageInfo;
+  edges: RoleEdge[];
+}
+
+export interface RoleConnectionPromise
+  extends Promise<RoleConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<RoleEdge>>() => T;
+  aggregate: <T = AggregateRolePromise>() => T;
+}
+
+export interface RoleConnectionSubscription
+  extends Promise<AsyncIterator<RoleConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<RoleEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateRoleSubscription>() => T;
+}
+
+export interface DialogPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface DialogPreviousValuesPromise
+  extends Promise<DialogPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface DialogPreviousValuesSubscription
+  extends Promise<AsyncIterator<DialogPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface LineEdge {
+  node: Line;
+  cursor: String;
+}
+
+export interface LineEdgePromise extends Promise<LineEdge>, Fragmentable {
+  node: <T = LinePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface LineEdgeSubscription
+  extends Promise<AsyncIterator<LineEdge>>,
+    Fragmentable {
+  node: <T = LineSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserConnection {
@@ -1054,6 +1195,77 @@ export interface UserConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
   aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface DialogConnection {
+  pageInfo: PageInfo;
+  edges: DialogEdge[];
+}
+
+export interface DialogConnectionPromise
+  extends Promise<DialogConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DialogEdge>>() => T;
+  aggregate: <T = AggregateDialogPromise>() => T;
+}
+
+export interface DialogConnectionSubscription
+  extends Promise<AsyncIterator<DialogConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DialogEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDialogSubscription>() => T;
+}
+
+export interface LinePreviousValues {
+  id: ID_Output;
+  text: String;
+  guess: String;
+  number: Int;
+}
+
+export interface LinePreviousValuesPromise
+  extends Promise<LinePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  guess: () => Promise<String>;
+  number: () => Promise<Int>;
+}
+
+export interface LinePreviousValuesSubscription
+  extends Promise<AsyncIterator<LinePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  guess: () => Promise<AsyncIterator<String>>;
+  number: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface LineSubscriptionPayload {
+  mutation: MutationType;
+  node: Line;
+  updatedFields: String[];
+  previousValues: LinePreviousValues;
+}
+
+export interface LineSubscriptionPayloadPromise
+  extends Promise<LineSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = LinePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = LinePreviousValuesPromise>() => T;
+}
+
+export interface LineSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<LineSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = LineSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = LinePreviousValuesSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -1138,161 +1350,6 @@ export interface UserNullablePromise
   }) => T;
 }
 
-export interface Dialog {
-  id: ID_Output;
-  name: String;
-}
-
-export interface DialogPromise extends Promise<Dialog>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  roles: <T = FragmentableArray<Role>>(args?: {
-    where?: RoleWhereInput;
-    orderBy?: RoleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  lines: <T = FragmentableArray<Line>>(args?: {
-    where?: LineWhereInput;
-    orderBy?: LineOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface DialogSubscription
-  extends Promise<AsyncIterator<Dialog>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  roles: <T = Promise<AsyncIterator<RoleSubscription>>>(args?: {
-    where?: RoleWhereInput;
-    orderBy?: RoleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  lines: <T = Promise<AsyncIterator<LineSubscription>>>(args?: {
-    where?: LineWhereInput;
-    orderBy?: LineOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface DialogNullablePromise
-  extends Promise<Dialog | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  roles: <T = FragmentableArray<Role>>(args?: {
-    where?: RoleWhereInput;
-    orderBy?: RoleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  lines: <T = FragmentableArray<Line>>(args?: {
-    where?: LineWhereInput;
-    orderBy?: LineOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface RoleEdge {
-  node: Role;
-  cursor: String;
-}
-
-export interface RoleEdgePromise extends Promise<RoleEdge>, Fragmentable {
-  node: <T = RolePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface RoleEdgeSubscription
-  extends Promise<AsyncIterator<RoleEdge>>,
-    Fragmentable {
-  node: <T = RoleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface DialogSubscriptionPayload {
-  mutation: MutationType;
-  node: Dialog;
-  updatedFields: String[];
-  previousValues: DialogPreviousValues;
-}
-
-export interface DialogSubscriptionPayloadPromise
-  extends Promise<DialogSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = DialogPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = DialogPreviousValuesPromise>() => T;
-}
-
-export interface DialogSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<DialogSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = DialogSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = DialogPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateLine {
-  count: Int;
-}
-
-export interface AggregateLinePromise
-  extends Promise<AggregateLine>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateLineSubscription
-  extends Promise<AsyncIterator<AggregateLine>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface DialogPreviousValues {
-  id: ID_Output;
-  name: String;
-}
-
-export interface DialogPreviousValuesPromise
-  extends Promise<DialogPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface DialogPreviousValuesSubscription
-  extends Promise<AsyncIterator<DialogPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
 export interface LineConnection {
   pageInfo: PageInfo;
   edges: LineEdge[];
@@ -1314,206 +1371,37 @@ export interface LineConnectionSubscription
   aggregate: <T = AggregateLineSubscription>() => T;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface Line {
-  id: ID_Output;
-  text: String;
-  guess: String;
-  number: Int;
-}
-
-export interface LinePromise extends Promise<Line>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  guess: () => Promise<String>;
-  role: <T = RolePromise>() => T;
-  number: () => Promise<Int>;
-}
-
-export interface LineSubscription
-  extends Promise<AsyncIterator<Line>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  guess: () => Promise<AsyncIterator<String>>;
-  role: <T = RoleSubscription>() => T;
-  number: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface LineNullablePromise
-  extends Promise<Line | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  guess: () => Promise<String>;
-  role: <T = RolePromise>() => T;
-  number: () => Promise<Int>;
-}
-
-export interface LinePreviousValues {
-  id: ID_Output;
-  text: String;
-  guess: String;
-  number: Int;
-}
-
-export interface LinePreviousValuesPromise
-  extends Promise<LinePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  guess: () => Promise<String>;
-  number: () => Promise<Int>;
-}
-
-export interface LinePreviousValuesSubscription
-  extends Promise<AsyncIterator<LinePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  guess: () => Promise<AsyncIterator<String>>;
-  number: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface LineSubscriptionPayload {
-  mutation: MutationType;
-  node: Line;
-  updatedFields: String[];
-  previousValues: LinePreviousValues;
-}
-
-export interface LineSubscriptionPayloadPromise
-  extends Promise<LineSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = LinePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = LinePreviousValuesPromise>() => T;
-}
-
-export interface LineSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LineSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LineSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LinePreviousValuesSubscription>() => T;
-}
-
-export interface DialogConnection {
-  pageInfo: PageInfo;
-  edges: DialogEdge[];
-}
-
-export interface DialogConnectionPromise
-  extends Promise<DialogConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DialogEdge>>() => T;
-  aggregate: <T = AggregateDialogPromise>() => T;
-}
-
-export interface DialogConnectionSubscription
-  extends Promise<AsyncIterator<DialogConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DialogEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDialogSubscription>() => T;
-}
-
-export interface AggregateRole {
+export interface AggregateLine {
   count: Int;
 }
 
-export interface AggregateRolePromise
-  extends Promise<AggregateRole>,
+export interface AggregateLinePromise
+  extends Promise<AggregateLine>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateRoleSubscription
-  extends Promise<AsyncIterator<AggregateRole>>,
+export interface AggregateLineSubscription
+  extends Promise<AsyncIterator<AggregateLine>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserEdge {
-  node: User;
+export interface RoleEdge {
+  node: Role;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface RoleEdgePromise extends Promise<RoleEdge>, Fragmentable {
+  node: <T = RolePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface RoleEdgeSubscription
+  extends Promise<AsyncIterator<RoleEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = RoleSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface LineEdge {
-  node: Line;
-  cursor: String;
-}
-
-export interface LineEdgePromise extends Promise<LineEdge>, Fragmentable {
-  node: <T = LinePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface LineEdgeSubscription
-  extends Promise<AsyncIterator<LineEdge>>,
-    Fragmentable {
-  node: <T = LineSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface RoleConnection {
-  pageInfo: PageInfo;
-  edges: RoleEdge[];
-}
-
-export interface RoleConnectionPromise
-  extends Promise<RoleConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<RoleEdge>>() => T;
-  aggregate: <T = AggregateRolePromise>() => T;
-}
-
-export interface RoleConnectionSubscription
-  extends Promise<AsyncIterator<RoleConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<RoleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateRoleSubscription>() => T;
 }
 
 /*
@@ -1522,22 +1410,22 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Int = number;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
 
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
 export type Long = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /**
  * Model Metadata

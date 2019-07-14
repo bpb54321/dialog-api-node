@@ -2,18 +2,39 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { APP_SECRET, getUserId } = require('../utils');
 
-function createDialog(root, args, context) {
+async function createDialog(root, args, context) {
   const userId = getUserId(context);
+
+  // Create lines and roles first
+  // Can use the create keyword to do nested creation with Prisma
+  // However, appears that you can only do one level of nested writes with
+  // Prisma, so we do the lines first, then the dialogs
+  // https://www.prisma.io/docs/1.34/prisma-client/basic-data-access/writing-data-JAVASCRIPT-rsc6/#nested-object-writes
+  let linesWithCreatedRole = args.lines.map((line) => {
+    const {text, guess, number, role} = line;
+    const lineWithCreatedRole = {
+      text,
+      guess,
+      number,
+      role: {
+        create: role,
+      }
+    };
+
+    return lineWithCreatedRole;
+
+    // const createdLine = await context.prisma.createLine(lineWithCreatedRole);
+    // return { id: createdLine.id };
+  });
+
   let dialog = {
     name: args.name,
-    roles: {
-      create: args.roles,
-    },
     lines: {
-      create: args.lines,
+      create: linesWithCreatedRole,
     }
   };
-  return context.prisma.createDialog(dialog);
+
+  return await context.prisma.createDialog(dialog);
 }
 
 async function signup(parent, args, context, info) {

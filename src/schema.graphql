@@ -1,5 +1,6 @@
 type Query {
     dialogs: [Dialog!]!
+    users: [User!]!
 }
 
 type Mutation {
@@ -13,6 +14,7 @@ type Dialog {
     name: String!
     roles: [Role!]!
     lines: [Line!]!
+    user: User!
 }
 
 type Role {

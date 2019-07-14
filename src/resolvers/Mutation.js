@@ -22,15 +22,17 @@ async function createDialog(root, args, context) {
     };
 
     return lineWithCreatedRole;
-
-    // const createdLine = await context.prisma.createLine(lineWithCreatedRole);
-    // return { id: createdLine.id };
   });
 
   let dialog = {
     name: args.name,
     lines: {
       create: linesWithCreatedRole,
+    },
+    user: {
+      connect: {
+        id: userId
+      }
     }
   };
 

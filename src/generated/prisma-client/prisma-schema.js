@@ -27,6 +27,7 @@ type Dialog {
   id: ID!
   name: String!
   lines(where: LineWhereInput, orderBy: LineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Line!]
+  user: User!
 }
 
 type DialogConnection {
@@ -39,11 +40,18 @@ input DialogCreateInput {
   id: ID
   name: String!
   lines: LineCreateManyInput
+  user: UserCreateOneWithoutDialogsInput!
 }
 
-input DialogCreateManyInput {
-  create: [DialogCreateInput!]
+input DialogCreateManyWithoutUserInput {
+  create: [DialogCreateWithoutUserInput!]
   connect: [DialogWhereUniqueInput!]
+}
+
+input DialogCreateWithoutUserInput {
+  id: ID
+  name: String!
+  lines: LineCreateManyInput
 }
 
 type DialogEdge {
@@ -115,34 +123,30 @@ input DialogSubscriptionWhereInput {
   NOT: [DialogSubscriptionWhereInput!]
 }
 
-input DialogUpdateDataInput {
-  name: String
-  lines: LineUpdateManyInput
-}
-
 input DialogUpdateInput {
   name: String
   lines: LineUpdateManyInput
+  user: UserUpdateOneRequiredWithoutDialogsInput
 }
 
 input DialogUpdateManyDataInput {
   name: String
 }
 
-input DialogUpdateManyInput {
-  create: [DialogCreateInput!]
-  update: [DialogUpdateWithWhereUniqueNestedInput!]
-  upsert: [DialogUpsertWithWhereUniqueNestedInput!]
+input DialogUpdateManyMutationInput {
+  name: String
+}
+
+input DialogUpdateManyWithoutUserInput {
+  create: [DialogCreateWithoutUserInput!]
   delete: [DialogWhereUniqueInput!]
   connect: [DialogWhereUniqueInput!]
   set: [DialogWhereUniqueInput!]
   disconnect: [DialogWhereUniqueInput!]
+  update: [DialogUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [DialogUpsertWithWhereUniqueWithoutUserInput!]
   deleteMany: [DialogScalarWhereInput!]
   updateMany: [DialogUpdateManyWithWhereNestedInput!]
-}
-
-input DialogUpdateManyMutationInput {
-  name: String
 }
 
 input DialogUpdateManyWithWhereNestedInput {
@@ -150,15 +154,20 @@ input DialogUpdateManyWithWhereNestedInput {
   data: DialogUpdateManyDataInput!
 }
 
-input DialogUpdateWithWhereUniqueNestedInput {
-  where: DialogWhereUniqueInput!
-  data: DialogUpdateDataInput!
+input DialogUpdateWithoutUserDataInput {
+  name: String
+  lines: LineUpdateManyInput
 }
 
-input DialogUpsertWithWhereUniqueNestedInput {
+input DialogUpdateWithWhereUniqueWithoutUserInput {
   where: DialogWhereUniqueInput!
-  update: DialogUpdateDataInput!
-  create: DialogCreateInput!
+  data: DialogUpdateWithoutUserDataInput!
+}
+
+input DialogUpsertWithWhereUniqueWithoutUserInput {
+  where: DialogWhereUniqueInput!
+  update: DialogUpdateWithoutUserDataInput!
+  create: DialogCreateWithoutUserInput!
 }
 
 input DialogWhereInput {
@@ -193,6 +202,7 @@ input DialogWhereInput {
   lines_every: LineWhereInput
   lines_some: LineWhereInput
   lines_none: LineWhereInput
+  user: UserWhereInput
   AND: [DialogWhereInput!]
   OR: [DialogWhereInput!]
   NOT: [DialogWhereInput!]
@@ -647,7 +657,19 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  dialogs: DialogCreateManyInput
+  dialogs: DialogCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutDialogsInput {
+  create: UserCreateWithoutDialogsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutDialogsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
 }
 
 type UserEdge {
@@ -695,13 +717,31 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  dialogs: DialogUpdateManyInput
+  dialogs: DialogUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+}
+
+input UserUpdateOneRequiredWithoutDialogsInput {
+  create: UserCreateWithoutDialogsInput
+  update: UserUpdateWithoutDialogsDataInput
+  upsert: UserUpsertWithoutDialogsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutDialogsDataInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UserUpsertWithoutDialogsInput {
+  update: UserUpdateWithoutDialogsDataInput!
+  create: UserCreateWithoutDialogsInput!
 }
 
 input UserWhereInput {

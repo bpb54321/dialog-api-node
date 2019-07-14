@@ -2,6 +2,7 @@ type Dialog {
     id: ID! @id
     name: String!
     lines: [Line!]!
+    user: User!
 }
 
 type Role {

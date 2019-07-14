@@ -1,7 +1,7 @@
-function lines (parent, args, context) {
+exports.lines =  (parent, args, context) => {
   return context.prisma.dialog({id: parent.id}).lines();
-}
+};
 
-module.exports = {
-  lines,
+exports.user = (parent, args, context) => {
+  return context.prisma.dialog({id: parent.id}).user();
 };

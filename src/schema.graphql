@@ -1,4 +1,5 @@
 type Query {
+    dialog(id: String!): Dialog!
     dialogs: [Dialog!]!
     users: [User!]!
 }

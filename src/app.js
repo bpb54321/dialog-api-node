@@ -29,8 +29,7 @@ const server = new GraphQLServer({
 
 server.start({
   cors: {
-    origin: ["http://localhost:3000"],
-    // origin: "*",
+    origin: ["http://localhost:3000, https://dialogpractice.herokuapp.com"],
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   },

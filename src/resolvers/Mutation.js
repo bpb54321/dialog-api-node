@@ -41,8 +41,8 @@ exports.createDialog = async function(root, args, context, info) {
 
 exports.signup = async function(parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10);
-  const user = await context.prisma.createUser({ ...args, password })
-  const token = jwt.sign({ userId: user.id }, APP_SECRET)
+  const user = await context.prisma.createUser({ ...args, password });
+  const token = jwt.sign({ userId: user.id }, APP_SECRET);
 
   return {
     token,

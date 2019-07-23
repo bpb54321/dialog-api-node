@@ -14,8 +14,8 @@ type Mutation {
 type Dialog {
     id: ID!
     name: String!
-    roles: [Role!]
-    lines: [Line!]
+    roles: [Role!]!
+    lines: [Line!]!
     user: User!
 }
 

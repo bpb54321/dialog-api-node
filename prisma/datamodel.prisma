@@ -1,6 +1,7 @@
 type Dialog {
     id: ID! @id
     name: String!
+    roles: [Role!]!
     lines: [Line!]!
     user: User!
 }

@@ -24,10 +24,6 @@ type Role {
     name: String!
 }
 
-input RoleInput {
-    name: String!
-}
-
 type Line {
     id: ID!
     text: String!
@@ -36,22 +32,26 @@ type Line {
     number: Int!
 }
 
-input LineInput {
-    text: String!
-    guess: String!
-    role: RoleInput!
-    number: Int!
-}
-
-type AuthPayload {
-  token: String
-  user: User
-}
-
 type User {
   id: ID!
   name: String!
   email: String!
   password: String!
   dialogs: [Dialog!]!
+}
+
+type AuthPayload {
+    token: String
+    user: User
+}
+
+input RoleInput {
+    name: String!
+}
+
+input LineInput {
+    text: String!
+    guess: String!
+    role: RoleInput!
+    number: Int!
 }

@@ -31,17 +31,27 @@ exports.createRole = async function(root, args, context, info) {
 };
 
 exports.updateRole = async function(root, args, context, info) {
-  let role = {};
+  let updateObject = {
+    data: {
+    },
+    where: {
+      id: args.id,
+    }
+  };
 
   if (args.name) {
-    role.name = args.name;
+    updateObject.data.name = args.name;
   }
 
-  if (args.dialog) {
-    role.dialog.connect.id = args.dialog;
+  if (args.dialogId) {
+    updateObject.data.dialog = {
+      connect: {
+        id: args.dialogId,
+      }
+    };
   }
 
-  return await context.prisma.updateRole(role);
+  return await context.prisma.updateRole(updateObject);
 };
 
 exports.signup = async function(parent, args, context, info) {

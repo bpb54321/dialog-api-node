@@ -7,7 +7,7 @@ type Query {
 type Mutation {
     createDialog(name: String!): Dialog!
     createRole(name: String!, dialogId: String!): Role!
-    updateRole(id: String!, updatedRole: RoleInput): Role!
+    updateRole(id: String!, name: String, dialogId: String): Role!
     signup(email: String!, password: String!, name: String!): AuthPayload
     updateUser(email: String!, newPassword: String!): Boolean
     login(email: String!, password: String!): AuthPayload

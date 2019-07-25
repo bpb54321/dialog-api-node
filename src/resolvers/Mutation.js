@@ -30,6 +30,20 @@ exports.createRole = async function(root, args, context, info) {
   return await context.prisma.createRole(role);
 };
 
+exports.updateRole = async function(root, args, context, info) {
+  let role = {};
+
+  if (args.name) {
+    role.name = args.name;
+  }
+
+  if (args.dialog) {
+    role.dialog.connect.id = args.dialog;
+  }
+
+  return await context.prisma.updateRole(role);
+};
+
 exports.signup = async function(parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10);
   const user = await context.prisma.createUser({ ...args, password });

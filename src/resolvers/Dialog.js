@@ -10,3 +10,5 @@ exports.roles =  (parent, args, context) => {
   return context.prisma.dialog({id: parent.id}).roles();
 };
 
+
+

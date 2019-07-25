@@ -40,7 +40,7 @@ type DialogConnection {
 input DialogCreateInput {
   id: ID
   name: String!
-  roles: RoleCreateManyInput
+  roles: RoleCreateManyWithoutDialogInput
   lines: LineCreateManyInput
   user: UserCreateOneWithoutDialogsInput!
 }
@@ -50,10 +50,22 @@ input DialogCreateManyWithoutUserInput {
   connect: [DialogWhereUniqueInput!]
 }
 
+input DialogCreateOneWithoutRolesInput {
+  create: DialogCreateWithoutRolesInput
+  connect: DialogWhereUniqueInput
+}
+
+input DialogCreateWithoutRolesInput {
+  id: ID
+  name: String!
+  lines: LineCreateManyInput
+  user: UserCreateOneWithoutDialogsInput!
+}
+
 input DialogCreateWithoutUserInput {
   id: ID
   name: String!
-  roles: RoleCreateManyInput
+  roles: RoleCreateManyWithoutDialogInput
   lines: LineCreateManyInput
 }
 
@@ -128,7 +140,7 @@ input DialogSubscriptionWhereInput {
 
 input DialogUpdateInput {
   name: String
-  roles: RoleUpdateManyInput
+  roles: RoleUpdateManyWithoutDialogInput
   lines: LineUpdateManyInput
   user: UserUpdateOneRequiredWithoutDialogsInput
 }
@@ -158,15 +170,35 @@ input DialogUpdateManyWithWhereNestedInput {
   data: DialogUpdateManyDataInput!
 }
 
+input DialogUpdateOneWithoutRolesInput {
+  create: DialogCreateWithoutRolesInput
+  update: DialogUpdateWithoutRolesDataInput
+  upsert: DialogUpsertWithoutRolesInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: DialogWhereUniqueInput
+}
+
+input DialogUpdateWithoutRolesDataInput {
+  name: String
+  lines: LineUpdateManyInput
+  user: UserUpdateOneRequiredWithoutDialogsInput
+}
+
 input DialogUpdateWithoutUserDataInput {
   name: String
-  roles: RoleUpdateManyInput
+  roles: RoleUpdateManyWithoutDialogInput
   lines: LineUpdateManyInput
 }
 
 input DialogUpdateWithWhereUniqueWithoutUserInput {
   where: DialogWhereUniqueInput!
   data: DialogUpdateWithoutUserDataInput!
+}
+
+input DialogUpsertWithoutRolesInput {
+  update: DialogUpdateWithoutRolesDataInput!
+  create: DialogCreateWithoutRolesInput!
 }
 
 input DialogUpsertWithWhereUniqueWithoutUserInput {
@@ -524,6 +556,7 @@ type Query {
 type Role {
   id: ID!
   name: String!
+  dialog: Dialog
 }
 
 type RoleConnection {
@@ -535,16 +568,22 @@ type RoleConnection {
 input RoleCreateInput {
   id: ID
   name: String!
+  dialog: DialogCreateOneWithoutRolesInput
 }
 
-input RoleCreateManyInput {
-  create: [RoleCreateInput!]
+input RoleCreateManyWithoutDialogInput {
+  create: [RoleCreateWithoutDialogInput!]
   connect: [RoleWhereUniqueInput!]
 }
 
 input RoleCreateOneInput {
   create: RoleCreateInput
   connect: RoleWhereUniqueInput
+}
+
+input RoleCreateWithoutDialogInput {
+  id: ID
+  name: String!
 }
 
 type RoleEdge {
@@ -618,30 +657,32 @@ input RoleSubscriptionWhereInput {
 
 input RoleUpdateDataInput {
   name: String
+  dialog: DialogUpdateOneWithoutRolesInput
 }
 
 input RoleUpdateInput {
   name: String
+  dialog: DialogUpdateOneWithoutRolesInput
 }
 
 input RoleUpdateManyDataInput {
   name: String
 }
 
-input RoleUpdateManyInput {
-  create: [RoleCreateInput!]
-  update: [RoleUpdateWithWhereUniqueNestedInput!]
-  upsert: [RoleUpsertWithWhereUniqueNestedInput!]
+input RoleUpdateManyMutationInput {
+  name: String
+}
+
+input RoleUpdateManyWithoutDialogInput {
+  create: [RoleCreateWithoutDialogInput!]
   delete: [RoleWhereUniqueInput!]
   connect: [RoleWhereUniqueInput!]
   set: [RoleWhereUniqueInput!]
   disconnect: [RoleWhereUniqueInput!]
+  update: [RoleUpdateWithWhereUniqueWithoutDialogInput!]
+  upsert: [RoleUpsertWithWhereUniqueWithoutDialogInput!]
   deleteMany: [RoleScalarWhereInput!]
   updateMany: [RoleUpdateManyWithWhereNestedInput!]
-}
-
-input RoleUpdateManyMutationInput {
-  name: String
 }
 
 input RoleUpdateManyWithWhereNestedInput {
@@ -656,9 +697,13 @@ input RoleUpdateOneRequiredInput {
   connect: RoleWhereUniqueInput
 }
 
-input RoleUpdateWithWhereUniqueNestedInput {
+input RoleUpdateWithoutDialogDataInput {
+  name: String
+}
+
+input RoleUpdateWithWhereUniqueWithoutDialogInput {
   where: RoleWhereUniqueInput!
-  data: RoleUpdateDataInput!
+  data: RoleUpdateWithoutDialogDataInput!
 }
 
 input RoleUpsertNestedInput {
@@ -666,10 +711,10 @@ input RoleUpsertNestedInput {
   create: RoleCreateInput!
 }
 
-input RoleUpsertWithWhereUniqueNestedInput {
+input RoleUpsertWithWhereUniqueWithoutDialogInput {
   where: RoleWhereUniqueInput!
-  update: RoleUpdateDataInput!
-  create: RoleCreateInput!
+  update: RoleUpdateWithoutDialogDataInput!
+  create: RoleCreateWithoutDialogInput!
 }
 
 input RoleWhereInput {
@@ -701,6 +746,7 @@ input RoleWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  dialog: DialogWhereInput
   AND: [RoleWhereInput!]
   OR: [RoleWhereInput!]
   NOT: [RoleWhereInput!]

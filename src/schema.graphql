@@ -6,6 +6,7 @@ type Query {
 
 type Mutation {
     createDialog(name: String!): Dialog!
+    createRole(name: String!, dialogId: String!): Role!
     signup(email: String!, password: String!, name: String!): AuthPayload
     updateUser(email: String!, newPassword: String!): Boolean
     login(email: String!, password: String!): AuthPayload
@@ -14,7 +15,7 @@ type Mutation {
 type Dialog {
     id: ID!
     name: String!
-    roles: [Role!]!
+    roles: [Role!]
     lines: [Line!]!
     user: User!
 }
@@ -22,6 +23,7 @@ type Dialog {
 type Role {
     id: ID!
     name: String!
+    dialog: Dialog
 }
 
 type Line {

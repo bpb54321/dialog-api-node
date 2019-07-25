@@ -17,6 +17,19 @@ exports.createDialog = async function(root, args, context, info) {
   return await context.prisma.createDialog(dialog);
 };
 
+exports.createRole = async function(root, args, context, info) {
+  let role = {
+    name: args.name,
+    dialog: {
+      connect: {
+        id: args.dialogId,
+      }
+    }
+  };
+
+  return await context.prisma.createRole(role);
+};
+
 exports.signup = async function(parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10);
   const user = await context.prisma.createUser({ ...args, password });

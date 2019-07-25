@@ -1,7 +1,7 @@
 type Dialog {
     id: ID! @id
     name: String!
-    roles: [Role!]!
+    roles: [Role!]
     lines: [Line!]!
     user: User!
 }
@@ -9,6 +9,7 @@ type Dialog {
 type Role {
     id: ID! @id
     name: String!
+    dialog: Dialog
 }
 
 type Line {

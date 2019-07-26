@@ -102,6 +102,10 @@ exports.updateLine = async function(root, args, context, info) {
     };
   }
 
+  if (args.number) {
+    updateObject.data.number = args.number;
+  }
+
   return await context.prisma.updateLine(updateObject);
 };
 

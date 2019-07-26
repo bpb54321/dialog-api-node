@@ -17,6 +17,50 @@ exports.createDialog = async function(root, args, context, info) {
   return await context.prisma.createDialog(dialog);
 };
 
+exports.updateDialog = async function(root, args, context, info) {
+  let updateObject = {
+    data: {
+    },
+    where: {
+      id: args.id,
+    }
+  };
+
+  if (args.name) {
+    updateObject.data.name = args.name;
+  }
+
+  return await context.prisma.updateDialog(updateObject);
+};
+
+exports.deleteDialog = async function(root, args, context, info) {
+
+  const lines = await context.prisma.dialog({id: args.id}).lines();
+  const lineIds = lines.map((line) => {
+    return line.id;
+  });
+
+  const roles = await context.prisma.dialog({id: args.id}).roles();
+  const roleIds = roles.map((role) => {
+    return role.id;
+  });
+
+  await context.prisma.deleteManyLines({
+    id_in: lineIds,
+  });
+
+  await context.prisma.deleteManyRoles({
+    id_in: roleIds
+  });
+
+
+  await context.prisma.deleteDialog({
+    id: args.id,
+  });
+
+  return true;
+};
+
 exports.createRole = async function(root, args, context, info) {
   let role = {
     name: args.name,

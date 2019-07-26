@@ -189,12 +189,10 @@ input DialogUpdateOneRequiredWithoutLinesInput {
   connect: DialogWhereUniqueInput
 }
 
-input DialogUpdateOneWithoutRolesInput {
+input DialogUpdateOneRequiredWithoutRolesInput {
   create: DialogCreateWithoutRolesInput
   update: DialogUpdateWithoutRolesDataInput
   upsert: DialogUpsertWithoutRolesInput
-  delete: Boolean
-  disconnect: Boolean
   connect: DialogWhereUniqueInput
 }
 
@@ -285,7 +283,7 @@ input DialogWhereUniqueInput {
 type Line {
   id: ID!
   text: String!
-  role: Role!
+  role: Role
   number: Int!
   dialog: Dialog!
 }
@@ -299,7 +297,7 @@ type LineConnection {
 input LineCreateInput {
   id: ID
   text: String!
-  role: RoleCreateOneInput!
+  role: RoleCreateOneInput
   number: Int!
   dialog: DialogCreateOneWithoutLinesInput!
 }
@@ -312,7 +310,7 @@ input LineCreateManyWithoutDialogInput {
 input LineCreateWithoutDialogInput {
   id: ID
   text: String!
-  role: RoleCreateOneInput!
+  role: RoleCreateOneInput
   number: Int!
 }
 
@@ -398,7 +396,7 @@ input LineSubscriptionWhereInput {
 
 input LineUpdateInput {
   text: String
-  role: RoleUpdateOneRequiredInput
+  role: RoleUpdateOneInput
   number: Int
   dialog: DialogUpdateOneRequiredWithoutLinesInput
 }
@@ -432,7 +430,7 @@ input LineUpdateManyWithWhereNestedInput {
 
 input LineUpdateWithoutDialogDataInput {
   text: String
-  role: RoleUpdateOneRequiredInput
+  role: RoleUpdateOneInput
   number: Int
 }
 
@@ -560,7 +558,7 @@ type Query {
 type Role {
   id: ID!
   name: String!
-  dialog: Dialog
+  dialog: Dialog!
 }
 
 type RoleConnection {
@@ -572,7 +570,7 @@ type RoleConnection {
 input RoleCreateInput {
   id: ID
   name: String!
-  dialog: DialogCreateOneWithoutRolesInput
+  dialog: DialogCreateOneWithoutRolesInput!
 }
 
 input RoleCreateManyWithoutDialogInput {
@@ -661,12 +659,12 @@ input RoleSubscriptionWhereInput {
 
 input RoleUpdateDataInput {
   name: String
-  dialog: DialogUpdateOneWithoutRolesInput
+  dialog: DialogUpdateOneRequiredWithoutRolesInput
 }
 
 input RoleUpdateInput {
   name: String
-  dialog: DialogUpdateOneWithoutRolesInput
+  dialog: DialogUpdateOneRequiredWithoutRolesInput
 }
 
 input RoleUpdateManyDataInput {
@@ -694,10 +692,12 @@ input RoleUpdateManyWithWhereNestedInput {
   data: RoleUpdateManyDataInput!
 }
 
-input RoleUpdateOneRequiredInput {
+input RoleUpdateOneInput {
   create: RoleCreateInput
   update: RoleUpdateDataInput
   upsert: RoleUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
   connect: RoleWhereUniqueInput
 }
 

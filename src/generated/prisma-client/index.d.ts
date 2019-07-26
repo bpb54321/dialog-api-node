@@ -291,7 +291,7 @@ export interface UserCreateOneWithoutDialogsInput {
 
 export interface RoleUpdateDataInput {
   name?: Maybe<String>;
-  dialog?: Maybe<DialogUpdateOneWithoutRolesInput>;
+  dialog?: Maybe<DialogUpdateOneRequiredWithoutRolesInput>;
 }
 
 export interface UserCreateWithoutDialogsInput {
@@ -500,19 +500,21 @@ export interface UserCreateInput {
 
 export interface LineUpdateWithoutDialogDataInput {
   text?: Maybe<String>;
-  role?: Maybe<RoleUpdateOneRequiredInput>;
+  role?: Maybe<RoleUpdateOneInput>;
   number?: Maybe<Int>;
 }
 
 export interface RoleUpdateInput {
   name?: Maybe<String>;
-  dialog?: Maybe<DialogUpdateOneWithoutRolesInput>;
+  dialog?: Maybe<DialogUpdateOneRequiredWithoutRolesInput>;
 }
 
-export interface RoleUpdateOneRequiredInput {
+export interface RoleUpdateOneInput {
   create?: Maybe<RoleCreateInput>;
   update?: Maybe<RoleUpdateDataInput>;
   upsert?: Maybe<RoleUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<RoleWhereUniqueInput>;
 }
 
@@ -594,19 +596,17 @@ export interface RoleCreateWithoutDialogInput {
   name: String;
 }
 
-export interface DialogUpdateOneWithoutRolesInput {
+export interface DialogUpdateOneRequiredWithoutRolesInput {
   create?: Maybe<DialogCreateWithoutRolesInput>;
   update?: Maybe<DialogUpdateWithoutRolesDataInput>;
   upsert?: Maybe<DialogUpsertWithoutRolesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
   connect?: Maybe<DialogWhereUniqueInput>;
 }
 
 export interface LineCreateWithoutDialogInput {
   id?: Maybe<ID_Input>;
   text: String;
-  role: RoleCreateOneInput;
+  role?: Maybe<RoleCreateOneInput>;
   number: Int;
 }
 
@@ -619,7 +619,7 @@ export interface DialogUpdateWithoutRolesDataInput {
 export interface RoleCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  dialog?: Maybe<DialogCreateOneWithoutRolesInput>;
+  dialog: DialogCreateOneWithoutRolesInput;
 }
 
 export interface UserUpdateOneRequiredWithoutDialogsInput {
@@ -851,7 +851,7 @@ export interface RoleCreateOneInput {
 
 export interface LineUpdateInput {
   text?: Maybe<String>;
-  role?: Maybe<RoleUpdateOneRequiredInput>;
+  role?: Maybe<RoleUpdateOneInput>;
   number?: Maybe<Int>;
   dialog?: Maybe<DialogUpdateOneRequiredWithoutLinesInput>;
 }
@@ -871,7 +871,7 @@ export interface DialogCreateOneWithoutLinesInput {
 export interface LineCreateInput {
   id?: Maybe<ID_Input>;
   text: String;
-  role: RoleCreateOneInput;
+  role?: Maybe<RoleCreateOneInput>;
   number: Int;
   dialog: DialogCreateOneWithoutLinesInput;
 }

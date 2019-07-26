@@ -6,16 +6,13 @@ type Query {
 
 type Mutation {
     createDialog(name: String!): Dialog!
+    updateDialog(id: String!, name: String): Dialog!
+    deleteDialog(id: String!): Boolean!
     createRole(name: String!, dialogId: String!): Role!
     updateRole(id: String!, name: String, dialogId: String): Role!
     deleteRole(id: String!): Boolean!
-
-
     createLine(text: String!, roleId: String!, dialogId: String!, number: Int!): Line!
-
     updateLine(id: String!, text: String, roleId: String, number: Int): Line!
-
-
     deleteLine(id: String!): Boolean!
     signup(email: String!, password: String!, name: String!): AuthPayload
     updateUser(email: String!, newPassword: String!): Boolean
@@ -25,7 +22,7 @@ type Mutation {
 type Dialog {
     id: ID!
     name: String!
-    roles: [Role!]
+    roles: [Role!]!
     lines: [Line!]!
     user: User!
 }
@@ -33,14 +30,14 @@ type Dialog {
 type Role {
     id: ID!
     name: String!
-    dialog: Dialog
+    dialog: Dialog!
 }
 
 type Line {
     id: ID!
     text: String!
     number: Int!
-    role: Role!
+    role: Role
     dialog: Dialog!
 }
 

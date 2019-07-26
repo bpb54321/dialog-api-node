@@ -62,6 +62,57 @@ exports.deleteRole = async function(root, args, context, info) {
   return true;
 };
 
+exports.createLine = async function(root, args, context, info) {
+  let line = {
+    text: args.text,
+    role: {
+      connect: {
+        id: args.roleId,
+      }
+    },
+    dialog: {
+      connect: {
+        id: args.dialogId,
+      }
+    },
+    number: args.number
+  };
+
+  return await context.prisma.createLine(line);
+};
+
+exports.updateLine = async function(root, args, context, info) {
+  let updateObject = {
+    data: {
+    },
+    where: {
+      id: args.id,
+    }
+  };
+
+  if (args.text) {
+    updateObject.data.text = args.text;
+  }
+
+  if (args.roleId) {
+    updateObject.data.role = {
+      connect: {
+        id: args.roleId,
+      }
+    };
+  }
+
+  return await context.prisma.updateLine(updateObject);
+};
+
+exports.deleteLine = async function(root, args, context, info) {
+  await context.prisma.deleteLine({
+    id: args.id,
+  });
+
+  return true;
+};
+
 exports.signup = async function(parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10);
   const user = await context.prisma.createUser({ ...args, password });

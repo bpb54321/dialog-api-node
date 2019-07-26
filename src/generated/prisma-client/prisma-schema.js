@@ -41,7 +41,7 @@ input DialogCreateInput {
   id: ID
   name: String!
   roles: RoleCreateManyWithoutDialogInput
-  lines: LineCreateManyInput
+  lines: LineCreateManyWithoutDialogInput
   user: UserCreateOneWithoutDialogsInput!
 }
 
@@ -50,15 +50,27 @@ input DialogCreateManyWithoutUserInput {
   connect: [DialogWhereUniqueInput!]
 }
 
+input DialogCreateOneWithoutLinesInput {
+  create: DialogCreateWithoutLinesInput
+  connect: DialogWhereUniqueInput
+}
+
 input DialogCreateOneWithoutRolesInput {
   create: DialogCreateWithoutRolesInput
   connect: DialogWhereUniqueInput
 }
 
+input DialogCreateWithoutLinesInput {
+  id: ID
+  name: String!
+  roles: RoleCreateManyWithoutDialogInput
+  user: UserCreateOneWithoutDialogsInput!
+}
+
 input DialogCreateWithoutRolesInput {
   id: ID
   name: String!
-  lines: LineCreateManyInput
+  lines: LineCreateManyWithoutDialogInput
   user: UserCreateOneWithoutDialogsInput!
 }
 
@@ -66,7 +78,7 @@ input DialogCreateWithoutUserInput {
   id: ID
   name: String!
   roles: RoleCreateManyWithoutDialogInput
-  lines: LineCreateManyInput
+  lines: LineCreateManyWithoutDialogInput
 }
 
 type DialogEdge {
@@ -141,7 +153,7 @@ input DialogSubscriptionWhereInput {
 input DialogUpdateInput {
   name: String
   roles: RoleUpdateManyWithoutDialogInput
-  lines: LineUpdateManyInput
+  lines: LineUpdateManyWithoutDialogInput
   user: UserUpdateOneRequiredWithoutDialogsInput
 }
 
@@ -170,6 +182,13 @@ input DialogUpdateManyWithWhereNestedInput {
   data: DialogUpdateManyDataInput!
 }
 
+input DialogUpdateOneRequiredWithoutLinesInput {
+  create: DialogCreateWithoutLinesInput
+  update: DialogUpdateWithoutLinesDataInput
+  upsert: DialogUpsertWithoutLinesInput
+  connect: DialogWhereUniqueInput
+}
+
 input DialogUpdateOneWithoutRolesInput {
   create: DialogCreateWithoutRolesInput
   update: DialogUpdateWithoutRolesDataInput
@@ -179,21 +198,32 @@ input DialogUpdateOneWithoutRolesInput {
   connect: DialogWhereUniqueInput
 }
 
+input DialogUpdateWithoutLinesDataInput {
+  name: String
+  roles: RoleUpdateManyWithoutDialogInput
+  user: UserUpdateOneRequiredWithoutDialogsInput
+}
+
 input DialogUpdateWithoutRolesDataInput {
   name: String
-  lines: LineUpdateManyInput
+  lines: LineUpdateManyWithoutDialogInput
   user: UserUpdateOneRequiredWithoutDialogsInput
 }
 
 input DialogUpdateWithoutUserDataInput {
   name: String
   roles: RoleUpdateManyWithoutDialogInput
-  lines: LineUpdateManyInput
+  lines: LineUpdateManyWithoutDialogInput
 }
 
 input DialogUpdateWithWhereUniqueWithoutUserInput {
   where: DialogWhereUniqueInput!
   data: DialogUpdateWithoutUserDataInput!
+}
+
+input DialogUpsertWithoutLinesInput {
+  update: DialogUpdateWithoutLinesDataInput!
+  create: DialogCreateWithoutLinesInput!
 }
 
 input DialogUpsertWithoutRolesInput {
@@ -255,9 +285,9 @@ input DialogWhereUniqueInput {
 type Line {
   id: ID!
   text: String!
-  guess: String!
   role: Role!
   number: Int!
+  dialog: Dialog!
 }
 
 type LineConnection {
@@ -269,14 +299,21 @@ type LineConnection {
 input LineCreateInput {
   id: ID
   text: String!
-  guess: String!
   role: RoleCreateOneInput!
   number: Int!
+  dialog: DialogCreateOneWithoutLinesInput!
 }
 
-input LineCreateManyInput {
-  create: [LineCreateInput!]
+input LineCreateManyWithoutDialogInput {
+  create: [LineCreateWithoutDialogInput!]
   connect: [LineWhereUniqueInput!]
+}
+
+input LineCreateWithoutDialogInput {
+  id: ID
+  text: String!
+  role: RoleCreateOneInput!
+  number: Int!
 }
 
 type LineEdge {
@@ -289,8 +326,6 @@ enum LineOrderByInput {
   id_DESC
   text_ASC
   text_DESC
-  guess_ASC
-  guess_DESC
   number_ASC
   number_DESC
 }
@@ -298,7 +333,6 @@ enum LineOrderByInput {
 type LinePreviousValues {
   id: ID!
   text: String!
-  guess: String!
   number: Int!
 }
 
@@ -331,20 +365,6 @@ input LineScalarWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
-  guess: String
-  guess_not: String
-  guess_in: [String!]
-  guess_not_in: [String!]
-  guess_lt: String
-  guess_lte: String
-  guess_gt: String
-  guess_gte: String
-  guess_contains: String
-  guess_not_contains: String
-  guess_starts_with: String
-  guess_not_starts_with: String
-  guess_ends_with: String
-  guess_not_ends_with: String
   number: Int
   number_not: Int
   number_in: [Int!]
@@ -376,42 +396,33 @@ input LineSubscriptionWhereInput {
   NOT: [LineSubscriptionWhereInput!]
 }
 
-input LineUpdateDataInput {
-  text: String
-  guess: String
-  role: RoleUpdateOneRequiredInput
-  number: Int
-}
-
 input LineUpdateInput {
   text: String
-  guess: String
   role: RoleUpdateOneRequiredInput
   number: Int
+  dialog: DialogUpdateOneRequiredWithoutLinesInput
 }
 
 input LineUpdateManyDataInput {
   text: String
-  guess: String
   number: Int
-}
-
-input LineUpdateManyInput {
-  create: [LineCreateInput!]
-  update: [LineUpdateWithWhereUniqueNestedInput!]
-  upsert: [LineUpsertWithWhereUniqueNestedInput!]
-  delete: [LineWhereUniqueInput!]
-  connect: [LineWhereUniqueInput!]
-  set: [LineWhereUniqueInput!]
-  disconnect: [LineWhereUniqueInput!]
-  deleteMany: [LineScalarWhereInput!]
-  updateMany: [LineUpdateManyWithWhereNestedInput!]
 }
 
 input LineUpdateManyMutationInput {
   text: String
-  guess: String
   number: Int
+}
+
+input LineUpdateManyWithoutDialogInput {
+  create: [LineCreateWithoutDialogInput!]
+  delete: [LineWhereUniqueInput!]
+  connect: [LineWhereUniqueInput!]
+  set: [LineWhereUniqueInput!]
+  disconnect: [LineWhereUniqueInput!]
+  update: [LineUpdateWithWhereUniqueWithoutDialogInput!]
+  upsert: [LineUpsertWithWhereUniqueWithoutDialogInput!]
+  deleteMany: [LineScalarWhereInput!]
+  updateMany: [LineUpdateManyWithWhereNestedInput!]
 }
 
 input LineUpdateManyWithWhereNestedInput {
@@ -419,15 +430,21 @@ input LineUpdateManyWithWhereNestedInput {
   data: LineUpdateManyDataInput!
 }
 
-input LineUpdateWithWhereUniqueNestedInput {
-  where: LineWhereUniqueInput!
-  data: LineUpdateDataInput!
+input LineUpdateWithoutDialogDataInput {
+  text: String
+  role: RoleUpdateOneRequiredInput
+  number: Int
 }
 
-input LineUpsertWithWhereUniqueNestedInput {
+input LineUpdateWithWhereUniqueWithoutDialogInput {
   where: LineWhereUniqueInput!
-  update: LineUpdateDataInput!
-  create: LineCreateInput!
+  data: LineUpdateWithoutDialogDataInput!
+}
+
+input LineUpsertWithWhereUniqueWithoutDialogInput {
+  where: LineWhereUniqueInput!
+  update: LineUpdateWithoutDialogDataInput!
+  create: LineCreateWithoutDialogInput!
 }
 
 input LineWhereInput {
@@ -459,20 +476,6 @@ input LineWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
-  guess: String
-  guess_not: String
-  guess_in: [String!]
-  guess_not_in: [String!]
-  guess_lt: String
-  guess_lte: String
-  guess_gt: String
-  guess_gte: String
-  guess_contains: String
-  guess_not_contains: String
-  guess_starts_with: String
-  guess_not_starts_with: String
-  guess_ends_with: String
-  guess_not_ends_with: String
   role: RoleWhereInput
   number: Int
   number_not: Int
@@ -482,6 +485,7 @@ input LineWhereInput {
   number_lte: Int
   number_gt: Int
   number_gte: Int
+  dialog: DialogWhereInput
   AND: [LineWhereInput!]
   OR: [LineWhereInput!]
   NOT: [LineWhereInput!]

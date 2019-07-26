@@ -225,8 +225,6 @@ export type LineOrderByInput =
   | "id_DESC"
   | "text_ASC"
   | "text_DESC"
-  | "guess_ASC"
-  | "guess_DESC"
   | "number_ASC"
   | "number_DESC";
 
@@ -248,70 +246,59 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface RoleScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  OR?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  NOT?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+export interface LineUpdateManyWithoutDialogInput {
+  create?: Maybe<LineCreateWithoutDialogInput[] | LineCreateWithoutDialogInput>;
+  delete?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  connect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  set?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  disconnect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+  update?: Maybe<
+    | LineUpdateWithWhereUniqueWithoutDialogInput[]
+    | LineUpdateWithWhereUniqueWithoutDialogInput
+  >;
+  upsert?: Maybe<
+    | LineUpsertWithWhereUniqueWithoutDialogInput[]
+    | LineUpsertWithWhereUniqueWithoutDialogInput
+  >;
+  deleteMany?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
+  updateMany?: Maybe<
+    LineUpdateManyWithWhereNestedInput[] | LineUpdateManyWithWhereNestedInput
+  >;
 }
 
 export type DialogWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface RoleCreateOneInput {
-  create?: Maybe<RoleCreateInput>;
-  connect?: Maybe<RoleWhereUniqueInput>;
-}
-
-export interface LineUpdateInput {
-  text?: Maybe<String>;
-  guess?: Maybe<String>;
-  role?: Maybe<RoleUpdateOneRequiredInput>;
-  number?: Maybe<Int>;
-}
-
-export interface RoleCreateInput {
+export interface DialogCreateWithoutRolesInput {
   id?: Maybe<ID_Input>;
   name: String;
-  dialog?: Maybe<DialogCreateOneWithoutRolesInput>;
+  lines?: Maybe<LineCreateManyWithoutDialogInput>;
+  user: UserCreateOneWithoutDialogsInput;
 }
 
-export interface LineUpdateWithWhereUniqueNestedInput {
-  where: LineWhereUniqueInput;
-  data: LineUpdateDataInput;
-}
-
-export interface DialogCreateOneWithoutRolesInput {
-  create?: Maybe<DialogCreateWithoutRolesInput>;
+export interface DialogUpdateOneRequiredWithoutLinesInput {
+  create?: Maybe<DialogCreateWithoutLinesInput>;
+  update?: Maybe<DialogUpdateWithoutLinesDataInput>;
+  upsert?: Maybe<DialogUpsertWithoutLinesInput>;
   connect?: Maybe<DialogWhereUniqueInput>;
+}
+
+export interface UserCreateOneWithoutDialogsInput {
+  create?: Maybe<UserCreateWithoutDialogsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface RoleUpdateDataInput {
+  name?: Maybe<String>;
+  dialog?: Maybe<DialogUpdateOneWithoutRolesInput>;
+}
+
+export interface UserCreateWithoutDialogsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -325,11 +312,11 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface DialogCreateWithoutRolesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  lines?: Maybe<LineCreateManyInput>;
-  user: UserCreateOneWithoutDialogsInput;
+export interface DialogUpdateInput {
+  name?: Maybe<String>;
+  roles?: Maybe<RoleUpdateManyWithoutDialogInput>;
+  lines?: Maybe<LineUpdateManyWithoutDialogInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
 }
 
 export interface RoleSubscriptionWhereInput {
@@ -343,9 +330,24 @@ export interface RoleSubscriptionWhereInput {
   NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
 }
 
-export interface UserCreateOneWithoutDialogsInput {
-  create?: Maybe<UserCreateWithoutDialogsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface RoleUpdateManyWithoutDialogInput {
+  create?: Maybe<RoleCreateWithoutDialogInput[] | RoleCreateWithoutDialogInput>;
+  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  update?: Maybe<
+    | RoleUpdateWithWhereUniqueWithoutDialogInput[]
+    | RoleUpdateWithWhereUniqueWithoutDialogInput
+  >;
+  upsert?: Maybe<
+    | RoleUpsertWithWhereUniqueWithoutDialogInput[]
+    | RoleUpsertWithWhereUniqueWithoutDialogInput
+  >;
+  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  updateMany?: Maybe<
+    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface RoleWhereInput {
@@ -383,11 +385,9 @@ export interface RoleWhereInput {
   NOT?: Maybe<RoleWhereInput[] | RoleWhereInput>;
 }
 
-export interface UserCreateWithoutDialogsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
+export interface RoleUpdateWithWhereUniqueWithoutDialogInput {
+  where: RoleWhereUniqueInput;
+  data: RoleUpdateWithoutDialogDataInput;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -396,11 +396,8 @@ export interface UserUpdateManyMutationInput {
   password?: Maybe<String>;
 }
 
-export interface DialogUpdateInput {
+export interface RoleUpdateWithoutDialogDataInput {
   name?: Maybe<String>;
-  roles?: Maybe<RoleUpdateManyWithoutDialogInput>;
-  lines?: Maybe<LineUpdateManyInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
 }
 
 export interface DialogUpdateManyWithWhereNestedInput {
@@ -408,53 +405,67 @@ export interface DialogUpdateManyWithWhereNestedInput {
   data: DialogUpdateManyDataInput;
 }
 
-export interface RoleUpdateManyWithoutDialogInput {
-  create?: Maybe<RoleCreateWithoutDialogInput[] | RoleCreateWithoutDialogInput>;
-  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  update?: Maybe<
-    | RoleUpdateWithWhereUniqueWithoutDialogInput[]
-    | RoleUpdateWithWhereUniqueWithoutDialogInput
-  >;
-  upsert?: Maybe<
-    | RoleUpsertWithWhereUniqueWithoutDialogInput[]
-    | RoleUpsertWithWhereUniqueWithoutDialogInput
-  >;
-  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  updateMany?: Maybe<
-    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
-  >;
+export interface RoleUpsertWithWhereUniqueWithoutDialogInput {
+  where: RoleWhereUniqueInput;
+  update: RoleUpdateWithoutDialogDataInput;
+  create: RoleCreateWithoutDialogInput;
 }
 
 export type LineWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface RoleUpdateWithWhereUniqueWithoutDialogInput {
-  where: RoleWhereUniqueInput;
-  data: RoleUpdateWithoutDialogDataInput;
+export interface RoleScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  OR?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  NOT?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
 }
 
 export interface DialogUpdateWithoutUserDataInput {
   name?: Maybe<String>;
   roles?: Maybe<RoleUpdateManyWithoutDialogInput>;
-  lines?: Maybe<LineUpdateManyInput>;
+  lines?: Maybe<LineUpdateManyWithoutDialogInput>;
 }
 
-export interface RoleUpdateWithoutDialogDataInput {
-  name?: Maybe<String>;
+export interface RoleUpdateManyWithWhereNestedInput {
+  where: RoleScalarWhereInput;
+  data: RoleUpdateManyDataInput;
 }
 
 export type RoleWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface RoleUpsertWithWhereUniqueWithoutDialogInput {
-  where: RoleWhereUniqueInput;
-  update: RoleUpdateWithoutDialogDataInput;
-  create: RoleCreateWithoutDialogInput;
+export interface RoleUpdateManyDataInput {
+  name?: Maybe<String>;
 }
 
 export interface UserUpdateInput {
@@ -466,7 +477,6 @@ export interface UserUpdateInput {
 
 export interface LineUpdateManyMutationInput {
   text?: Maybe<String>;
-  guess?: Maybe<String>;
   number?: Maybe<Int>;
 }
 
@@ -475,9 +485,9 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface RoleUpdateManyWithWhereNestedInput {
-  where: RoleScalarWhereInput;
-  data: RoleUpdateManyDataInput;
+export interface LineUpdateWithWhereUniqueWithoutDialogInput {
+  where: LineWhereUniqueInput;
+  data: LineUpdateWithoutDialogDataInput;
 }
 
 export interface UserCreateInput {
@@ -488,8 +498,10 @@ export interface UserCreateInput {
   dialogs?: Maybe<DialogCreateManyWithoutUserInput>;
 }
 
-export interface RoleUpdateManyDataInput {
-  name?: Maybe<String>;
+export interface LineUpdateWithoutDialogDataInput {
+  text?: Maybe<String>;
+  role?: Maybe<RoleUpdateOneRequiredInput>;
+  number?: Maybe<Int>;
 }
 
 export interface RoleUpdateInput {
@@ -497,31 +509,18 @@ export interface RoleUpdateInput {
   dialog?: Maybe<DialogUpdateOneWithoutRolesInput>;
 }
 
-export interface LineUpdateManyInput {
-  create?: Maybe<LineCreateInput[] | LineCreateInput>;
-  update?: Maybe<
-    | LineUpdateWithWhereUniqueNestedInput[]
-    | LineUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | LineUpsertWithWhereUniqueNestedInput[]
-    | LineUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  connect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  set?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  disconnect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-  deleteMany?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
-  updateMany?: Maybe<
-    LineUpdateManyWithWhereNestedInput[] | LineUpdateManyWithWhereNestedInput
-  >;
+export interface RoleUpdateOneRequiredInput {
+  create?: Maybe<RoleCreateInput>;
+  update?: Maybe<RoleUpdateDataInput>;
+  upsert?: Maybe<RoleUpsertNestedInput>;
+  connect?: Maybe<RoleWhereUniqueInput>;
 }
 
 export interface DialogCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   roles?: Maybe<RoleCreateManyWithoutDialogInput>;
-  lines?: Maybe<LineCreateManyInput>;
+  lines?: Maybe<LineCreateManyWithoutDialogInput>;
   user: UserCreateOneWithoutDialogsInput;
 }
 
@@ -595,26 +594,286 @@ export interface RoleCreateWithoutDialogInput {
   name: String;
 }
 
-export interface LineUpdateDataInput {
+export interface DialogUpdateOneWithoutRolesInput {
+  create?: Maybe<DialogCreateWithoutRolesInput>;
+  update?: Maybe<DialogUpdateWithoutRolesDataInput>;
+  upsert?: Maybe<DialogUpsertWithoutRolesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<DialogWhereUniqueInput>;
+}
+
+export interface LineCreateWithoutDialogInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  role: RoleCreateOneInput;
+  number: Int;
+}
+
+export interface DialogUpdateWithoutRolesDataInput {
+  name?: Maybe<String>;
+  lines?: Maybe<LineUpdateManyWithoutDialogInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
+}
+
+export interface RoleCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  dialog?: Maybe<DialogCreateOneWithoutRolesInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutDialogsInput {
+  create?: Maybe<UserCreateWithoutDialogsInput>;
+  update?: Maybe<UserUpdateWithoutDialogsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutDialogsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface LineWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
   text?: Maybe<String>;
-  guess?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  role?: Maybe<RoleWhereInput>;
+  number?: Maybe<Int>;
+  number_not?: Maybe<Int>;
+  number_in?: Maybe<Int[] | Int>;
+  number_not_in?: Maybe<Int[] | Int>;
+  number_lt?: Maybe<Int>;
+  number_lte?: Maybe<Int>;
+  number_gt?: Maybe<Int>;
+  number_gte?: Maybe<Int>;
+  dialog?: Maybe<DialogWhereInput>;
+  AND?: Maybe<LineWhereInput[] | LineWhereInput>;
+  OR?: Maybe<LineWhereInput[] | LineWhereInput>;
+  NOT?: Maybe<LineWhereInput[] | LineWhereInput>;
+}
+
+export interface UserUpdateWithoutDialogsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+}
+
+export interface LineSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LineWhereInput>;
+  AND?: Maybe<LineSubscriptionWhereInput[] | LineSubscriptionWhereInput>;
+  OR?: Maybe<LineSubscriptionWhereInput[] | LineSubscriptionWhereInput>;
+  NOT?: Maybe<LineSubscriptionWhereInput[] | LineSubscriptionWhereInput>;
+}
+
+export interface UserUpsertWithoutDialogsInput {
+  update: UserUpdateWithoutDialogsDataInput;
+  create: UserCreateWithoutDialogsInput;
+}
+
+export interface DialogUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface DialogUpsertWithoutRolesInput {
+  update: DialogUpdateWithoutRolesDataInput;
+  create: DialogCreateWithoutRolesInput;
+}
+
+export interface DialogUpsertWithWhereUniqueWithoutUserInput {
+  where: DialogWhereUniqueInput;
+  update: DialogUpdateWithoutUserDataInput;
+  create: DialogCreateWithoutUserInput;
+}
+
+export interface RoleUpsertNestedInput {
+  update: RoleUpdateDataInput;
+  create: RoleCreateInput;
+}
+
+export interface DialogUpdateManyWithoutUserInput {
+  create?: Maybe<DialogCreateWithoutUserInput[] | DialogCreateWithoutUserInput>;
+  delete?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  set?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  disconnect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+  update?: Maybe<
+    | DialogUpdateWithWhereUniqueWithoutUserInput[]
+    | DialogUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | DialogUpsertWithWhereUniqueWithoutUserInput[]
+    | DialogUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
+  updateMany?: Maybe<
+    | DialogUpdateManyWithWhereNestedInput[]
+    | DialogUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface LineUpsertWithWhereUniqueWithoutDialogInput {
+  where: LineWhereUniqueInput;
+  update: LineUpdateWithoutDialogDataInput;
+  create: LineCreateWithoutDialogInput;
+}
+
+export interface DialogCreateManyWithoutUserInput {
+  create?: Maybe<DialogCreateWithoutUserInput[] | DialogCreateWithoutUserInput>;
+  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
+}
+
+export interface LineScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  text?: Maybe<String>;
+  text_not?: Maybe<String>;
+  text_in?: Maybe<String[] | String>;
+  text_not_in?: Maybe<String[] | String>;
+  text_lt?: Maybe<String>;
+  text_lte?: Maybe<String>;
+  text_gt?: Maybe<String>;
+  text_gte?: Maybe<String>;
+  text_contains?: Maybe<String>;
+  text_not_contains?: Maybe<String>;
+  text_starts_with?: Maybe<String>;
+  text_not_starts_with?: Maybe<String>;
+  text_ends_with?: Maybe<String>;
+  text_not_ends_with?: Maybe<String>;
+  number?: Maybe<Int>;
+  number_not?: Maybe<Int>;
+  number_in?: Maybe<Int[] | Int>;
+  number_not_in?: Maybe<Int[] | Int>;
+  number_lt?: Maybe<Int>;
+  number_lte?: Maybe<Int>;
+  number_gt?: Maybe<Int>;
+  number_gte?: Maybe<Int>;
+  AND?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
+  OR?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
+  NOT?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
+}
+
+export interface LineCreateManyWithoutDialogInput {
+  create?: Maybe<LineCreateWithoutDialogInput[] | LineCreateWithoutDialogInput>;
+  connect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
+}
+
+export interface LineUpdateManyWithWhereNestedInput {
+  where: LineScalarWhereInput;
+  data: LineUpdateManyDataInput;
+}
+
+export interface DialogCreateOneWithoutRolesInput {
+  create?: Maybe<DialogCreateWithoutRolesInput>;
+  connect?: Maybe<DialogWhereUniqueInput>;
+}
+
+export interface LineUpdateManyDataInput {
+  text?: Maybe<String>;
+  number?: Maybe<Int>;
+}
+
+export interface DialogSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<DialogWhereInput>;
+  AND?: Maybe<DialogSubscriptionWhereInput[] | DialogSubscriptionWhereInput>;
+  OR?: Maybe<DialogSubscriptionWhereInput[] | DialogSubscriptionWhereInput>;
+  NOT?: Maybe<DialogSubscriptionWhereInput[] | DialogSubscriptionWhereInput>;
+}
+
+export interface DialogUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface DialogUpdateWithWhereUniqueWithoutUserInput {
+  where: DialogWhereUniqueInput;
+  data: DialogUpdateWithoutUserDataInput;
+}
+
+export interface DialogUpsertWithoutLinesInput {
+  update: DialogUpdateWithoutLinesDataInput;
+  create: DialogCreateWithoutLinesInput;
+}
+
+export interface RoleUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface DialogUpdateWithoutLinesDataInput {
+  name?: Maybe<String>;
+  roles?: Maybe<RoleUpdateManyWithoutDialogInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
+}
+
+export interface RoleCreateOneInput {
+  create?: Maybe<RoleCreateInput>;
+  connect?: Maybe<RoleWhereUniqueInput>;
+}
+
+export interface LineUpdateInput {
+  text?: Maybe<String>;
   role?: Maybe<RoleUpdateOneRequiredInput>;
   number?: Maybe<Int>;
+  dialog?: Maybe<DialogUpdateOneRequiredWithoutLinesInput>;
+}
+
+export interface DialogCreateWithoutLinesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  roles?: Maybe<RoleCreateManyWithoutDialogInput>;
+  user: UserCreateOneWithoutDialogsInput;
+}
+
+export interface DialogCreateOneWithoutLinesInput {
+  create?: Maybe<DialogCreateWithoutLinesInput>;
+  connect?: Maybe<DialogWhereUniqueInput>;
 }
 
 export interface LineCreateInput {
   id?: Maybe<ID_Input>;
   text: String;
-  guess: String;
   role: RoleCreateOneInput;
   number: Int;
-}
-
-export interface RoleUpdateOneRequiredInput {
-  create?: Maybe<RoleCreateInput>;
-  update?: Maybe<RoleUpdateDataInput>;
-  upsert?: Maybe<RoleUpsertNestedInput>;
-  connect?: Maybe<RoleWhereUniqueInput>;
+  dialog: DialogCreateOneWithoutLinesInput;
 }
 
 export interface DialogWhereInput {
@@ -658,29 +917,16 @@ export interface DialogWhereInput {
   NOT?: Maybe<DialogWhereInput[] | DialogWhereInput>;
 }
 
-export interface RoleUpdateDataInput {
-  name?: Maybe<String>;
-  dialog?: Maybe<DialogUpdateOneWithoutRolesInput>;
+export interface RoleCreateManyWithoutDialogInput {
+  create?: Maybe<RoleCreateWithoutDialogInput[] | RoleCreateWithoutDialogInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
 }
 
-export interface DialogSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<DialogWhereInput>;
-  AND?: Maybe<DialogSubscriptionWhereInput[] | DialogSubscriptionWhereInput>;
-  OR?: Maybe<DialogSubscriptionWhereInput[] | DialogSubscriptionWhereInput>;
-  NOT?: Maybe<DialogSubscriptionWhereInput[] | DialogSubscriptionWhereInput>;
-}
-
-export interface DialogUpdateOneWithoutRolesInput {
-  create?: Maybe<DialogCreateWithoutRolesInput>;
-  update?: Maybe<DialogUpdateWithoutRolesDataInput>;
-  upsert?: Maybe<DialogUpsertWithoutRolesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<DialogWhereUniqueInput>;
+export interface DialogCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  roles?: Maybe<RoleCreateManyWithoutDialogInput>;
+  lines?: Maybe<LineCreateManyWithoutDialogInput>;
 }
 
 export interface DialogScalarWhereInput {
@@ -715,247 +961,6 @@ export interface DialogScalarWhereInput {
   AND?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
   OR?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
   NOT?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
-}
-
-export interface DialogUpdateWithoutRolesDataInput {
-  name?: Maybe<String>;
-  lines?: Maybe<LineUpdateManyInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
-}
-
-export interface DialogUpdateWithWhereUniqueWithoutUserInput {
-  where: DialogWhereUniqueInput;
-  data: DialogUpdateWithoutUserDataInput;
-}
-
-export interface UserUpdateOneRequiredWithoutDialogsInput {
-  create?: Maybe<UserCreateWithoutDialogsInput>;
-  update?: Maybe<UserUpdateWithoutDialogsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutDialogsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface DialogCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  roles?: Maybe<RoleCreateManyWithoutDialogInput>;
-  lines?: Maybe<LineCreateManyInput>;
-}
-
-export interface UserUpdateWithoutDialogsDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface RoleUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutDialogsInput {
-  update: UserUpdateWithoutDialogsDataInput;
-  create: UserCreateWithoutDialogsInput;
-}
-
-export interface RoleCreateManyWithoutDialogInput {
-  create?: Maybe<RoleCreateWithoutDialogInput[] | RoleCreateWithoutDialogInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-}
-
-export interface DialogUpsertWithoutRolesInput {
-  update: DialogUpdateWithoutRolesDataInput;
-  create: DialogCreateWithoutRolesInput;
-}
-
-export interface LineWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  guess?: Maybe<String>;
-  guess_not?: Maybe<String>;
-  guess_in?: Maybe<String[] | String>;
-  guess_not_in?: Maybe<String[] | String>;
-  guess_lt?: Maybe<String>;
-  guess_lte?: Maybe<String>;
-  guess_gt?: Maybe<String>;
-  guess_gte?: Maybe<String>;
-  guess_contains?: Maybe<String>;
-  guess_not_contains?: Maybe<String>;
-  guess_starts_with?: Maybe<String>;
-  guess_not_starts_with?: Maybe<String>;
-  guess_ends_with?: Maybe<String>;
-  guess_not_ends_with?: Maybe<String>;
-  role?: Maybe<RoleWhereInput>;
-  number?: Maybe<Int>;
-  number_not?: Maybe<Int>;
-  number_in?: Maybe<Int[] | Int>;
-  number_not_in?: Maybe<Int[] | Int>;
-  number_lt?: Maybe<Int>;
-  number_lte?: Maybe<Int>;
-  number_gt?: Maybe<Int>;
-  number_gte?: Maybe<Int>;
-  AND?: Maybe<LineWhereInput[] | LineWhereInput>;
-  OR?: Maybe<LineWhereInput[] | LineWhereInput>;
-  NOT?: Maybe<LineWhereInput[] | LineWhereInput>;
-}
-
-export interface RoleUpsertNestedInput {
-  update: RoleUpdateDataInput;
-  create: RoleCreateInput;
-}
-
-export interface DialogUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface LineUpsertWithWhereUniqueNestedInput {
-  where: LineWhereUniqueInput;
-  update: LineUpdateDataInput;
-  create: LineCreateInput;
-}
-
-export interface DialogUpdateManyWithoutUserInput {
-  create?: Maybe<DialogCreateWithoutUserInput[] | DialogCreateWithoutUserInput>;
-  delete?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  set?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  disconnect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-  update?: Maybe<
-    | DialogUpdateWithWhereUniqueWithoutUserInput[]
-    | DialogUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | DialogUpsertWithWhereUniqueWithoutUserInput[]
-    | DialogUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
-  updateMany?: Maybe<
-    | DialogUpdateManyWithWhereNestedInput[]
-    | DialogUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface DialogUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface LineUpdateManyDataInput {
-  text?: Maybe<String>;
-  guess?: Maybe<String>;
-  number?: Maybe<Int>;
-}
-
-export interface LineUpdateManyWithWhereNestedInput {
-  where: LineScalarWhereInput;
-  data: LineUpdateManyDataInput;
-}
-
-export interface LineScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  text?: Maybe<String>;
-  text_not?: Maybe<String>;
-  text_in?: Maybe<String[] | String>;
-  text_not_in?: Maybe<String[] | String>;
-  text_lt?: Maybe<String>;
-  text_lte?: Maybe<String>;
-  text_gt?: Maybe<String>;
-  text_gte?: Maybe<String>;
-  text_contains?: Maybe<String>;
-  text_not_contains?: Maybe<String>;
-  text_starts_with?: Maybe<String>;
-  text_not_starts_with?: Maybe<String>;
-  text_ends_with?: Maybe<String>;
-  text_not_ends_with?: Maybe<String>;
-  guess?: Maybe<String>;
-  guess_not?: Maybe<String>;
-  guess_in?: Maybe<String[] | String>;
-  guess_not_in?: Maybe<String[] | String>;
-  guess_lt?: Maybe<String>;
-  guess_lte?: Maybe<String>;
-  guess_gt?: Maybe<String>;
-  guess_gte?: Maybe<String>;
-  guess_contains?: Maybe<String>;
-  guess_not_contains?: Maybe<String>;
-  guess_starts_with?: Maybe<String>;
-  guess_not_starts_with?: Maybe<String>;
-  guess_ends_with?: Maybe<String>;
-  guess_not_ends_with?: Maybe<String>;
-  number?: Maybe<Int>;
-  number_not?: Maybe<Int>;
-  number_in?: Maybe<Int[] | Int>;
-  number_not_in?: Maybe<Int[] | Int>;
-  number_lt?: Maybe<Int>;
-  number_lte?: Maybe<Int>;
-  number_gt?: Maybe<Int>;
-  number_gte?: Maybe<Int>;
-  AND?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
-  OR?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
-  NOT?: Maybe<LineScalarWhereInput[] | LineScalarWhereInput>;
-}
-
-export interface LineCreateManyInput {
-  create?: Maybe<LineCreateInput[] | LineCreateInput>;
-  connect?: Maybe<LineWhereUniqueInput[] | LineWhereUniqueInput>;
-}
-
-export interface DialogCreateManyWithoutUserInput {
-  create?: Maybe<DialogCreateWithoutUserInput[] | DialogCreateWithoutUserInput>;
-  connect?: Maybe<DialogWhereUniqueInput[] | DialogWhereUniqueInput>;
-}
-
-export interface DialogUpsertWithWhereUniqueWithoutUserInput {
-  where: DialogWhereUniqueInput;
-  update: DialogUpdateWithoutUserDataInput;
-  create: DialogCreateWithoutUserInput;
-}
-
-export interface LineSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LineWhereInput>;
-  AND?: Maybe<LineSubscriptionWhereInput[] | LineSubscriptionWhereInput>;
-  OR?: Maybe<LineSubscriptionWhereInput[] | LineSubscriptionWhereInput>;
-  NOT?: Maybe<LineSubscriptionWhereInput[] | LineSubscriptionWhereInput>;
 }
 
 export interface NodeNode {
@@ -1419,16 +1424,15 @@ export interface RoleSubscriptionPayloadSubscription
 export interface Line {
   id: ID_Output;
   text: String;
-  guess: String;
   number: Int;
 }
 
 export interface LinePromise extends Promise<Line>, Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
-  guess: () => Promise<String>;
   role: <T = RolePromise>() => T;
   number: () => Promise<Int>;
+  dialog: <T = DialogPromise>() => T;
 }
 
 export interface LineSubscription
@@ -1436,9 +1440,9 @@ export interface LineSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
-  guess: () => Promise<AsyncIterator<String>>;
   role: <T = RoleSubscription>() => T;
   number: () => Promise<AsyncIterator<Int>>;
+  dialog: <T = DialogSubscription>() => T;
 }
 
 export interface LineNullablePromise
@@ -1446,15 +1450,14 @@ export interface LineNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
-  guess: () => Promise<String>;
   role: <T = RolePromise>() => T;
   number: () => Promise<Int>;
+  dialog: <T = DialogPromise>() => T;
 }
 
 export interface LinePreviousValues {
   id: ID_Output;
   text: String;
-  guess: String;
   number: Int;
 }
 
@@ -1463,7 +1466,6 @@ export interface LinePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
-  guess: () => Promise<String>;
   number: () => Promise<Int>;
 }
 
@@ -1472,7 +1474,6 @@ export interface LinePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
-  guess: () => Promise<AsyncIterator<String>>;
   number: () => Promise<AsyncIterator<Int>>;
 }
 

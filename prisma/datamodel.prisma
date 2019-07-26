@@ -15,9 +15,9 @@ type Role {
 type Line {
     id: ID! @id
     text: String!
-    guess: String!
-    role: Role! @relation(link: INLINE)
+    role: Role!
     number: Int!
+    dialog: Dialog!
 }
 
 type User {

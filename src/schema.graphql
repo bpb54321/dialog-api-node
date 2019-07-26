@@ -9,6 +9,14 @@ type Mutation {
     createRole(name: String!, dialogId: String!): Role!
     updateRole(id: String!, name: String, dialogId: String): Role!
     deleteRole(id: String!): Boolean!
+
+
+    createLine(text: String!, roleId: String!, dialogId: String!, number: Int!): Line!
+
+    updateLine(id: String!, text: String, roleId: String): Line!
+
+
+    deleteLine(id: String!): Boolean!
     signup(email: String!, password: String!, name: String!): AuthPayload
     updateUser(email: String!, newPassword: String!): Boolean
     login(email: String!, password: String!): AuthPayload
@@ -31,9 +39,9 @@ type Role {
 type Line {
     id: ID!
     text: String!
-    guess: String!
-    role: Role!
     number: Int!
+    role: Role!
+    dialog: Dialog!
 }
 
 type User {

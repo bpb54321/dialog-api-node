@@ -25,6 +25,7 @@ type Dialog {
     roles: [Role!]!
     lines: [Line!]!
     user: User!
+    language: String!
 }
 
 type Role {

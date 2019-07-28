@@ -4,13 +4,17 @@ context('createDialog', () => {
   specify(`When I send a createDialog mutation, ` +
     `Then I should get the correct response`, () => {
 
+    // Seed the database with a single user
+    cy.exec('prisma reset --force').its('code').should('eq', 0);
+    cy.exec('prisma import --data ./prisma/seed-data/single-user.zip')
+      .its('code').should('eq', 0);
+
     const variables = {
       name: "Dialog 1.1",
       languageCode: "en-US",
     };
 
-    const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjanlrcGhiMmMzb295MGI5OXB1dGo2NH" +
-      "ppIiwiaWF0IjoxNTY0MzMwNzIwfQ.pwUndbPVfARKN6aMjtrAsLfYpUKhiWJyHakV5m4vR6Y";
+    const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjanluY3Y4MTFnZHMzMGI5OXB0dTcxYzNtIiwiaWF0IjoxNTY0MzQyMDUxfQ.JM22aW4z2exbQuJuHcMUxY4DGqP2-LDyJNtILWvzlW8";
 
     cy.request({
       url: "http://localhost:4000",

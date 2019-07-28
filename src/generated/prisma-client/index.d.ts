@@ -232,7 +232,9 @@ export type DialogOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
-  | "name_DESC";
+  | "name_DESC"
+  | "languageCode_ASC"
+  | "languageCode_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -275,6 +277,7 @@ export interface DialogCreateWithoutRolesInput {
   name: String;
   lines?: Maybe<LineCreateManyWithoutDialogInput>;
   user: UserCreateOneWithoutDialogsInput;
+  languageCode: String;
 }
 
 export interface DialogUpdateOneRequiredWithoutLinesInput {
@@ -317,6 +320,7 @@ export interface DialogUpdateInput {
   roles?: Maybe<RoleUpdateManyWithoutDialogInput>;
   lines?: Maybe<LineUpdateManyWithoutDialogInput>;
   user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
+  languageCode?: Maybe<String>;
 }
 
 export interface RoleSubscriptionWhereInput {
@@ -453,6 +457,7 @@ export interface DialogUpdateWithoutUserDataInput {
   name?: Maybe<String>;
   roles?: Maybe<RoleUpdateManyWithoutDialogInput>;
   lines?: Maybe<LineUpdateManyWithoutDialogInput>;
+  languageCode?: Maybe<String>;
 }
 
 export interface RoleUpdateManyWithWhereNestedInput {
@@ -524,6 +529,7 @@ export interface DialogCreateInput {
   roles?: Maybe<RoleCreateManyWithoutDialogInput>;
   lines?: Maybe<LineCreateManyWithoutDialogInput>;
   user: UserCreateOneWithoutDialogsInput;
+  languageCode: String;
 }
 
 export interface UserWhereInput {
@@ -614,6 +620,7 @@ export interface DialogUpdateWithoutRolesDataInput {
   name?: Maybe<String>;
   lines?: Maybe<LineUpdateManyWithoutDialogInput>;
   user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
+  languageCode?: Maybe<String>;
 }
 
 export interface RoleCreateInput {
@@ -697,6 +704,7 @@ export interface UserUpsertWithoutDialogsInput {
 
 export interface DialogUpdateManyDataInput {
   name?: Maybe<String>;
+  languageCode?: Maybe<String>;
 }
 
 export interface DialogUpsertWithoutRolesInput {
@@ -822,6 +830,7 @@ export interface DialogSubscriptionWhereInput {
 
 export interface DialogUpdateManyMutationInput {
   name?: Maybe<String>;
+  languageCode?: Maybe<String>;
 }
 
 export interface DialogUpdateWithWhereUniqueWithoutUserInput {
@@ -842,6 +851,7 @@ export interface DialogUpdateWithoutLinesDataInput {
   name?: Maybe<String>;
   roles?: Maybe<RoleUpdateManyWithoutDialogInput>;
   user?: Maybe<UserUpdateOneRequiredWithoutDialogsInput>;
+  languageCode?: Maybe<String>;
 }
 
 export interface RoleCreateOneInput {
@@ -861,6 +871,7 @@ export interface DialogCreateWithoutLinesInput {
   name: String;
   roles?: Maybe<RoleCreateManyWithoutDialogInput>;
   user: UserCreateOneWithoutDialogsInput;
+  languageCode: String;
 }
 
 export interface DialogCreateOneWithoutLinesInput {
@@ -912,6 +923,20 @@ export interface DialogWhereInput {
   lines_some?: Maybe<LineWhereInput>;
   lines_none?: Maybe<LineWhereInput>;
   user?: Maybe<UserWhereInput>;
+  languageCode?: Maybe<String>;
+  languageCode_not?: Maybe<String>;
+  languageCode_in?: Maybe<String[] | String>;
+  languageCode_not_in?: Maybe<String[] | String>;
+  languageCode_lt?: Maybe<String>;
+  languageCode_lte?: Maybe<String>;
+  languageCode_gt?: Maybe<String>;
+  languageCode_gte?: Maybe<String>;
+  languageCode_contains?: Maybe<String>;
+  languageCode_not_contains?: Maybe<String>;
+  languageCode_starts_with?: Maybe<String>;
+  languageCode_not_starts_with?: Maybe<String>;
+  languageCode_ends_with?: Maybe<String>;
+  languageCode_not_ends_with?: Maybe<String>;
   AND?: Maybe<DialogWhereInput[] | DialogWhereInput>;
   OR?: Maybe<DialogWhereInput[] | DialogWhereInput>;
   NOT?: Maybe<DialogWhereInput[] | DialogWhereInput>;
@@ -927,6 +952,7 @@ export interface DialogCreateWithoutUserInput {
   name: String;
   roles?: Maybe<RoleCreateManyWithoutDialogInput>;
   lines?: Maybe<LineCreateManyWithoutDialogInput>;
+  languageCode: String;
 }
 
 export interface DialogScalarWhereInput {
@@ -958,6 +984,20 @@ export interface DialogScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  languageCode?: Maybe<String>;
+  languageCode_not?: Maybe<String>;
+  languageCode_in?: Maybe<String[] | String>;
+  languageCode_not_in?: Maybe<String[] | String>;
+  languageCode_lt?: Maybe<String>;
+  languageCode_lte?: Maybe<String>;
+  languageCode_gt?: Maybe<String>;
+  languageCode_gte?: Maybe<String>;
+  languageCode_contains?: Maybe<String>;
+  languageCode_not_contains?: Maybe<String>;
+  languageCode_starts_with?: Maybe<String>;
+  languageCode_not_starts_with?: Maybe<String>;
+  languageCode_ends_with?: Maybe<String>;
+  languageCode_not_ends_with?: Maybe<String>;
   AND?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
   OR?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
   NOT?: Maybe<DialogScalarWhereInput[] | DialogScalarWhereInput>;
@@ -1144,6 +1184,7 @@ export interface AggregateRoleSubscription
 export interface Dialog {
   id: ID_Output;
   name: String;
+  languageCode: String;
 }
 
 export interface DialogPromise extends Promise<Dialog>, Fragmentable {
@@ -1168,6 +1209,7 @@ export interface DialogPromise extends Promise<Dialog>, Fragmentable {
     last?: Int;
   }) => T;
   user: <T = UserPromise>() => T;
+  languageCode: () => Promise<String>;
 }
 
 export interface DialogSubscription
@@ -1194,6 +1236,7 @@ export interface DialogSubscription
     last?: Int;
   }) => T;
   user: <T = UserSubscription>() => T;
+  languageCode: () => Promise<AsyncIterator<String>>;
 }
 
 export interface DialogNullablePromise
@@ -1220,6 +1263,7 @@ export interface DialogNullablePromise
     last?: Int;
   }) => T;
   user: <T = UserPromise>() => T;
+  languageCode: () => Promise<String>;
 }
 
 export interface RoleConnection {
@@ -1288,6 +1332,7 @@ export interface LineEdgeSubscription
 export interface DialogPreviousValues {
   id: ID_Output;
   name: String;
+  languageCode: String;
 }
 
 export interface DialogPreviousValuesPromise
@@ -1295,6 +1340,7 @@ export interface DialogPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  languageCode: () => Promise<String>;
 }
 
 export interface DialogPreviousValuesSubscription
@@ -1302,6 +1348,7 @@ export interface DialogPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  languageCode: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateDialog {

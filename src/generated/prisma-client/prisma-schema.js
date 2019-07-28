@@ -29,6 +29,7 @@ type Dialog {
   roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   lines(where: LineWhereInput, orderBy: LineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Line!]
   user: User!
+  languageCode: String!
 }
 
 type DialogConnection {
@@ -43,6 +44,7 @@ input DialogCreateInput {
   roles: RoleCreateManyWithoutDialogInput
   lines: LineCreateManyWithoutDialogInput
   user: UserCreateOneWithoutDialogsInput!
+  languageCode: String!
 }
 
 input DialogCreateManyWithoutUserInput {
@@ -65,6 +67,7 @@ input DialogCreateWithoutLinesInput {
   name: String!
   roles: RoleCreateManyWithoutDialogInput
   user: UserCreateOneWithoutDialogsInput!
+  languageCode: String!
 }
 
 input DialogCreateWithoutRolesInput {
@@ -72,6 +75,7 @@ input DialogCreateWithoutRolesInput {
   name: String!
   lines: LineCreateManyWithoutDialogInput
   user: UserCreateOneWithoutDialogsInput!
+  languageCode: String!
 }
 
 input DialogCreateWithoutUserInput {
@@ -79,6 +83,7 @@ input DialogCreateWithoutUserInput {
   name: String!
   roles: RoleCreateManyWithoutDialogInput
   lines: LineCreateManyWithoutDialogInput
+  languageCode: String!
 }
 
 type DialogEdge {
@@ -91,11 +96,14 @@ enum DialogOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  languageCode_ASC
+  languageCode_DESC
 }
 
 type DialogPreviousValues {
   id: ID!
   name: String!
+  languageCode: String!
 }
 
 input DialogScalarWhereInput {
@@ -127,6 +135,20 @@ input DialogScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  languageCode: String
+  languageCode_not: String
+  languageCode_in: [String!]
+  languageCode_not_in: [String!]
+  languageCode_lt: String
+  languageCode_lte: String
+  languageCode_gt: String
+  languageCode_gte: String
+  languageCode_contains: String
+  languageCode_not_contains: String
+  languageCode_starts_with: String
+  languageCode_not_starts_with: String
+  languageCode_ends_with: String
+  languageCode_not_ends_with: String
   AND: [DialogScalarWhereInput!]
   OR: [DialogScalarWhereInput!]
   NOT: [DialogScalarWhereInput!]
@@ -155,14 +177,17 @@ input DialogUpdateInput {
   roles: RoleUpdateManyWithoutDialogInput
   lines: LineUpdateManyWithoutDialogInput
   user: UserUpdateOneRequiredWithoutDialogsInput
+  languageCode: String
 }
 
 input DialogUpdateManyDataInput {
   name: String
+  languageCode: String
 }
 
 input DialogUpdateManyMutationInput {
   name: String
+  languageCode: String
 }
 
 input DialogUpdateManyWithoutUserInput {
@@ -200,18 +225,21 @@ input DialogUpdateWithoutLinesDataInput {
   name: String
   roles: RoleUpdateManyWithoutDialogInput
   user: UserUpdateOneRequiredWithoutDialogsInput
+  languageCode: String
 }
 
 input DialogUpdateWithoutRolesDataInput {
   name: String
   lines: LineUpdateManyWithoutDialogInput
   user: UserUpdateOneRequiredWithoutDialogsInput
+  languageCode: String
 }
 
 input DialogUpdateWithoutUserDataInput {
   name: String
   roles: RoleUpdateManyWithoutDialogInput
   lines: LineUpdateManyWithoutDialogInput
+  languageCode: String
 }
 
 input DialogUpdateWithWhereUniqueWithoutUserInput {
@@ -271,6 +299,20 @@ input DialogWhereInput {
   lines_some: LineWhereInput
   lines_none: LineWhereInput
   user: UserWhereInput
+  languageCode: String
+  languageCode_not: String
+  languageCode_in: [String!]
+  languageCode_not_in: [String!]
+  languageCode_lt: String
+  languageCode_lte: String
+  languageCode_gt: String
+  languageCode_gte: String
+  languageCode_contains: String
+  languageCode_not_contains: String
+  languageCode_starts_with: String
+  languageCode_not_starts_with: String
+  languageCode_ends_with: String
+  languageCode_not_ends_with: String
   AND: [DialogWhereInput!]
   OR: [DialogWhereInput!]
   NOT: [DialogWhereInput!]

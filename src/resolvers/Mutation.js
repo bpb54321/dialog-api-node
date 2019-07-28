@@ -11,7 +11,8 @@ exports.createDialog = async function(root, args, context, info) {
       connect: {
         id: userId
       }
-    }
+    },
+    languageCode: args.languageCode,
   };
 
   return await context.prisma.createDialog(dialog);

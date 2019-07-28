@@ -5,7 +5,7 @@ type Query {
 }
 
 type Mutation {
-    createDialog(name: String!): Dialog!
+    createDialog(name: String!, languageCode: String!): Dialog!
     updateDialog(id: String!, name: String): Dialog!
     deleteDialog(id: String!): Boolean!
     createRole(name: String!, dialogId: String!): Role!
@@ -25,7 +25,7 @@ type Dialog {
     roles: [Role!]!
     lines: [Line!]!
     user: User!
-    language: String!
+    languageCode: String!
 }
 
 type Role {

@@ -6,7 +6,7 @@ type Query {
 
 type Mutation {
     createDialog(name: String!, languageCode: String!): Dialog!
-    updateDialog(id: String!, name: String): Dialog!
+    updateDialog(id: String!, name: String, languageCode: String): Dialog!
     deleteDialog(id: String!): Boolean!
     createRole(name: String!, dialogId: String!): Role!
     updateRole(id: String!, name: String, dialogId: String): Role!

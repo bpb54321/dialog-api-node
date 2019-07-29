@@ -4,6 +4,7 @@ type Dialog {
     roles: [Role!]!
     lines: [Line!]!
     user: User!
+    languageCode: String!
 }
 
 type Role {

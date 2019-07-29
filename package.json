@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "prisma deploy",
+    "build": "npx prisma deploy",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js"
@@ -20,5 +20,8 @@
   "devDependencies": {
     "cypress": "^3.4.0",
     "nodemon": "^1.19.1"
+  },
+  "engines": {
+    "node": "10.14.0"
   }
 }

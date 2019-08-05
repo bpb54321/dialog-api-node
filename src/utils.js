@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const APP_SECRET = 'GraphQL-is-aw3some';
 
-function getUserId(context) {
+exports.getUserId = function getUserId(context) {
   const Authorization = context.request.get('Authorization');
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '');
@@ -10,9 +10,16 @@ function getUserId(context) {
   }
 
   throw new Error('Not authenticated');
-}
+};
 
-module.exports = {
-  APP_SECRET,
-  getUserId,
+/**
+ * Used to simulate a slow server response.
+ * @return {Promise<boolean>}
+ */
+exports.waitABit = async function waitABit() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 5000);
+  });
 };

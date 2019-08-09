@@ -1,11 +1,6 @@
-# The HTTP endpoint for your Prisma API
-endpoint: 'https://us1.prisma.sh/brian-blosser/dialog-api-node/dev'
-
-# Points to the file that contains your datamodel
+endpoint: http://localhost:4466/localhost/dev
 datamodel: datamodel.prisma
 
-# Specifies language & location for the generated Prisma client
 generate:
   - generator: javascript-client
     output: ../src/generated/prisma-client
-    

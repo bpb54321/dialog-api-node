@@ -22,5 +22,6 @@ services:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
       - mysql:/var/lib/mysql
+      - ./prisma/seed-data:/seed-data
 volumes:
   mysql: ~

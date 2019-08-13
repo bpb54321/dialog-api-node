@@ -64,5 +64,5 @@ input LineInput {
     id: String!
     text: String
     number: Int
-    role: RoleInput
+    roleId: String
 }

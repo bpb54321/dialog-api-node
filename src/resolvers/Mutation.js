@@ -131,31 +131,44 @@ exports.createLine = async function(root, args, context, info) {
 };
 
 exports.updateLine = async function(root, args, context, info) {
-  let updateObject = {
-    data: {
-    },
-    where: {
-      id: args.id,
-    }
-  };
 
-  if (args.text) {
-    updateObject.data.text = args.text;
-  }
+  const {lines} = args;
 
-  if (args.roleId) {
-    updateObject.data.role = {
-      connect: {
-        id: args.roleId,
+  const updatedLines = [];
+
+  for (const line of lines) {
+    const lineId = line.id;
+
+    let updateObject = {
+      data: {
+
+      },
+      where: {
+        id: lineId,
       }
     };
+
+    if (line.text) {
+      updateObject.data.text = line.text;
+    }
+
+    if (line.roleId) {
+      updateObject.data.role = {
+        connect: {
+          id: line.roleId,
+        }
+      };
+    }
+
+    if (line.number) {
+      updateObject.data.number = line.number;
+    }
+
+    updatedLines.push(await context.prisma.updateLine(updateObject));
+
   }
 
-  if (args.number) {
-    updateObject.data.number = args.number;
-  }
-
-  return await context.prisma.updateLine(updateObject);
+  return updatedLines;
 };
 
 exports.deleteLine = async function(root, args, context, info) {

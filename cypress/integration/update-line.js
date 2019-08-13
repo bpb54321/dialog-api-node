@@ -16,18 +16,23 @@ context('updateLine', () => {
 
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjano1aWlkbGIwMDAzMDc2NmNxYzJwbDFvIiwiaWF0IjoxNTY1NDM5OTIxfQ.DGZ3m6mZftHS5LODRKhl80DzHfFPXyxzpE-vKgHdQKY";
 
+    const linesWithDesiredFields = [
+      {
+        "id": "cjz9xb4e002rb0766w1kdlgw5",
+        "number": 4,
+      },
+      {
+        "id": "cjz9xb58s02rj0766m18izy5c",
+        "number": 5,
+      },
+      {
+        "id": "cjz9xb60m02rr0766hzo76vqf",
+        "number": 6,
+      }
+    ];
+    // This includes the fields that we want to use to update the lines
     const variables = {
-      lines: [
-        {
-          "id": "cjz9xb4e002rb0766w1kdlgw5",
-        },
-        {
-          "id": "cjz9xb58s02rj0766m18izy5c",
-        },
-        {
-          "id": "cjz9xb60m02rr0766hzo76vqf",
-        }
-      ],
+      lines: linesWithDesiredFields,
     };
 
     cy.request({
@@ -52,20 +57,7 @@ context('updateLine', () => {
     }).should((response) => {
       expect(response.body).to.deep.equal({
         "data": {
-          "updateLine": [
-            {
-              id: "",
-              number: 4,
-            },
-            {
-              id: "",
-              number: 5,
-            },
-            {
-              id: "",
-              number: 6,
-            },
-          ],
+          "updateLine": linesWithDesiredFields,
         }
       });
     })

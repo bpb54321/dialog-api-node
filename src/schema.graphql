@@ -12,7 +12,7 @@ type Mutation {
     updateRole(id: String!, name: String, dialogId: String): Role!
     deleteRole(id: String!): Boolean!
     createLine(text: String!, roleId: String!, dialogId: String!, number: Int!): Line!
-    updateLine(id: String!, text: String, roleId: String, number: Int): Line!
+    updateLine(lines: [LineInput!]!): [Line!]!
     deleteLine(id: String!): Boolean!
     signup(email: String!, password: String!, name: String!): AuthPayload
     updateUser(email: String!, newPassword: String!): Boolean
@@ -61,8 +61,8 @@ input RoleInput {
 }
 
 input LineInput {
-    text: String!
-    guess: String!
-    role: RoleInput!
-    number: Int!
+    id: String!
+    text: String
+    number: Int
+    role: RoleInput
 }

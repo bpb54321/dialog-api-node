@@ -15,30 +15,98 @@ context('updateLine', () => {
   specify(`Update multiple lines at once`, () => {
 
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjano1aWlkbGIwMDAzMDc2NmNxYzJwbDFvIiwiaWF0IjoxNTY1NDM5OTIxfQ.DGZ3m6mZftHS5LODRKhl80DzHfFPXyxzpE-vKgHdQKY";
-
-    const linesWithDesiredFields = [
+    const currentDialogs = [
       {
-        "id": "cjz9xb4e002rb0766w1kdlgw5",
+        "lines": [
+          {
+            "id": "cjz9xb4e002rb0766w1kdlgw5",
+            "number": 1,
+            "text": "This is the text for line 1.",
+            "role": {
+              "id": "cjz9xb3i102qw0766ubr6dvc3",
+              "name": "John"
+            }
+          },
+          {
+            "id": "cjz9xb58s02rj0766m18izy5c",
+            "number": 2,
+            "text": "This is the text for line 2.",
+            "role": {
+              "id": "cjz9xb3t202r3076635xxmoqm",
+              "name": "Jane"
+            }
+          },
+          {
+            "id": "cjz9xb60m02rr0766hzo76vqf",
+            "number": 3,
+            "text": "This is the text for line 3.",
+            "role": {
+              "id": "cjz9xb3i102qw0766ubr6dvc3",
+              "name": "John"
+            }
+          }
+        ]
+      }
+    ];
+
+    // Get current line data so we can make sure that we actually changed the line data
+    cy.request({
+      url: Cypress.config().baseUrl,
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: {
+        "operationName": "Dialogs",
+        "variables": {},
+        "query":
+          `
+            query Dialogs {
+              dialogs {
+                lines {
+                  id
+                  number
+                  text
+                  role {
+                    id
+                    name
+                  }
+                }
+              }
+            }
+          `,
+      },
+    }).should((response) => {
+      expect(response.body).to.deep.equal({
+        "data": {
+          "dialogs": currentDialogs,
+        }
+      });
+    });
+
+    const updatedLines = [
+      {
+        "id": currentDialogs[0].lines[0].id,
         "number": 4,
         "text": "This is the text for line 4.",
-        "roleId": "cjz9xb3t202r3076635xxmoqm",
+        "roleId": currentDialogs[0].lines[1].role.id, // Swap line 2 role with line 1 role, etc for other lines
       },
       {
-        "id": "cjz9xb58s02rj0766m18izy5c",
+        "id": currentDialogs[0].lines[1].id,
         "number": 5,
         "text": "This is the text for line 5.",
-        "roleId": "cjz9xb3i102qw0766ubr6dvc3",
+        "roleId": currentDialogs[0].lines[0].role.id,
       },
       {
-        "id": "cjz9xb60m02rr0766hzo76vqf",
+        "id": currentDialogs[0].lines[2].id,
         "number": 6,
         "text": "This is the text for line 6.",
-        "roleId": "cjz9xb3t202r3076635xxmoqm",
+        "roleId": currentDialogs[0].lines[1].role.id,
       }
     ];
     // This includes the fields that we want to use to update the lines
     const variables = {
-      lines: linesWithDesiredFields,
+      lines: updatedLines,
     };
 
     cy.request({
@@ -69,32 +137,32 @@ context('updateLine', () => {
         "data": {
           "updateLine": [
             {
-              id: linesWithDesiredFields[0].id,
-              number: linesWithDesiredFields[0].number,
-              text: linesWithDesiredFields[0].text,
+              id: updatedLines[0].id,
+              number: updatedLines[0].number,
+              text: updatedLines[0].text,
               role: {
-                id: linesWithDesiredFields[0].roleId
+                id: updatedLines[0].roleId
               }
             },
             {
-              id: linesWithDesiredFields[1].id,
-              number: linesWithDesiredFields[1].number,
-              text: linesWithDesiredFields[1].text,
+              id: updatedLines[1].id,
+              number: updatedLines[1].number,
+              text: updatedLines[1].text,
               role: {
-                id: linesWithDesiredFields[1].roleId
+                id: updatedLines[1].roleId
               }
             },
             {
-              id: linesWithDesiredFields[2].id,
-              number: linesWithDesiredFields[2].number,
-              text: linesWithDesiredFields[2].text,
+              id: updatedLines[2].id,
+              number: updatedLines[2].number,
+              text: updatedLines[2].text,
               role: {
-                id: linesWithDesiredFields[2].roleId
+                id: updatedLines[2].roleId
               }
             },
           ],
         }
       });
-    })
+    });
   });
 });

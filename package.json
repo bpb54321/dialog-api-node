@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx prisma deploy -p prisma/prisma-prod.yml && npx prisma generate -p prisma/prisma-prod.yml",
+    "build": "prisma generate -p prisma/prisma-prod.yml",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js"

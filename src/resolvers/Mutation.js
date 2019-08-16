@@ -148,7 +148,7 @@ exports.updateLine = async function(root, args, context, info) {
       }
     };
 
-    if (line.text) {
+    if (line.text !== undefined) { // we could get empty string
       updateObject.data.text = line.text;
     }
 
